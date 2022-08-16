@@ -12,6 +12,7 @@ public class NekoArcComponent implements AutoSyncedComponent {
 	public static final float ARC_HEIGHT = 1.375f / EntityType.PLAYER.getHeight();
 	private final PlayerEntity obj;
 	private boolean arc = false;
+	private boolean flying = false;
 
 	public NekoArcComponent(PlayerEntity obj) {
 		this.obj = obj;
@@ -45,10 +46,12 @@ public class NekoArcComponent implements AutoSyncedComponent {
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		arc = tag.getBoolean("nekoarcueidbrunestud");
+		flying = tag.getBoolean("flying");
 	}
 
 	@Override
 	public void writeToNbt(NbtCompound tag) {
 		tag.putBoolean("nekoarcueidbrunestud", arc);
+		tag.putBoolean("flying", flying);
 	}
 }

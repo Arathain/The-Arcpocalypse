@@ -235,6 +235,8 @@ public class NekoArcModel extends BipedEntityModel<PlayerEntity> {
 		this.tail.pivotY = 7.0f;
 		this.rightArm.roll += 0.523;
 		this.leftArm.roll -= 0.523;
+		this.leftLeg.visible = !livingEntity.isFallFlying();
+		this.rightLeg.visible = !livingEntity.isFallFlying();
 
 		this.hat.copyTransform(this.head);
 	}

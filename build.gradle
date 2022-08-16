@@ -9,9 +9,17 @@ group = project.maven_group
 
 repositories {
 	maven {
-		url = "https://jitpack.io"
+		name = "Ladysnake"
+		url = "https://ladysnake.jfrog.io/artifactory/mods"
 	}
-	maven { url 'https://ladysnake.jfrog.io/artifactory/mods' }
+	maven { url 'https://masa.dy.fi/maven' }
+	maven { url 'https://maven.terraformersmc.com' }
+	maven { url = "https://jitpack.io" }
+	maven {
+		name = "Modrinth"
+		url = "https://api.modrinth.com/maven"
+		content { includeGroup "maven.modrinth" }
+	}
 }
 
 // All dependency versions are declared in the gradle.properties file
@@ -33,6 +41,7 @@ dependencies {
 		exclude(group: "net.fabricmc")
 		exclude(group: "net.fabricmc.fabric-api")
 	}
+	modImplementation ("com.github.Arathain:LodestoneLib-Quilt:438baa98b7")
 
 	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${quilted_fabric_api_version}-${minecraft_version}"
 

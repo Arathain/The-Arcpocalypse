@@ -59,11 +59,11 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 	protected abstract void renderLabelIfPresent(AbstractClientPlayerEntity abstractClientPlayerEntity, Text text, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i);
 
 	@Inject(method = "<init>", at = @At("TAIL"))
-	private void init(EntityRendererFactory.Context context, boolean bl, CallbackInfo ci) {
+	private void neko$init(EntityRendererFactory.Context context, boolean bl, CallbackInfo ci) {
 		MODEL = new NekoArcModel(context.getPart(ArcpocalypseClient.ARC_MODEL_LAYER));
 	}
 	@Inject(method = "renderArm", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/PlayerEntityModel;setAngles(Lnet/minecraft/entity/LivingEntity;FFFFF)V", shift = At.Shift.AFTER), cancellable = true)
-	private void renderArm(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, ModelPart arm, ModelPart sleeve, CallbackInfo ci) {
+	private void neko$renderArm(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, ModelPart arm, ModelPart sleeve, CallbackInfo ci) {
 		if(player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			arm = arm == this.model.rightArm ? this.MODEL.rightArm : this.MODEL.leftArm;
 			this.MODEL.handSwingProgress = 0.0F;
@@ -79,7 +79,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 	}
 
 	@Inject(method = "render(Lnet/minecraft/client/network/AbstractClientPlayerEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
-	private void render(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, CallbackInfo callbackInfo) {
+	private void neko$render(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, CallbackInfo callbackInfo) {
 		if(player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			matrixStack.push();
 			this.MODEL.handSwingProgress = this.getHandSwingProgress(player, tickDelta);
@@ -126,10 +126,13 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			}
 
 			l = this.getAnimationProgress(player, tickDelta);
+			final float widthScale = ScaleUtils.getModelWidthScale(player, tickDelta);
+			final float heightScale = ScaleUtils.getModelHeightScale(player, tickDelta);
+			matrixStack.scale(1/widthScale, 1/heightScale, 1/widthScale);
 			this.setupTransforms(player, matrixStack, l, h, tickDelta);
 			matrixStack.scale(-1.0F, -1.0F, 1.0F);
 			this.scale(player, matrixStack, tickDelta);
-			matrixStack.translate(0.0, -1.5010000467300415, 0.0);
+			matrixStack.translate(0.0, -1.1, 0.0);
 			n = 0.0F;
 			float o = 0.0F;
 			if (!player.hasVehicle() && player.isAlive()) {
@@ -153,9 +156,6 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			if (renderLayer != null) {
 				VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(renderLayer);
 				int p = getOverlay(player, this.getAnimationCounter(player, tickDelta));
-				final float widthScale = ScaleUtils.getModelWidthScale(player, tickDelta);
-				final float heightScale = ScaleUtils.getModelHeightScale(player, tickDelta);
-				matrixStack.scale(1/widthScale, 1/heightScale, 1/widthScale);
 				if((!this.MODEL.eyes.visible && player.getRandom().nextFloat() > 0.90f) && !player.isSleeping()) {
 					this.MODEL.eyes.visible = true;
 				}
