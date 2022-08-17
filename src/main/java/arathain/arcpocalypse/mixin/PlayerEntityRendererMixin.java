@@ -19,11 +19,14 @@ import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.render.entity.feature.StuckObjectsFeatureRenderer;
 import net.minecraft.client.render.entity.feature.TridentRiptideFeatureRenderer;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Arm;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -58,6 +61,11 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 	@Shadow
 	protected abstract void renderLabelIfPresent(AbstractClientPlayerEntity abstractClientPlayerEntity, Text text, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i);
 
+	@Shadow
+	private static BipedEntityModel.ArmPose getArmPose(AbstractClientPlayerEntity player, Hand hand) {
+		return null;
+	}
+
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void neko$init(EntityRendererFactory.Context context, boolean bl, CallbackInfo ci) {
 		MODEL = new NekoArcModel(context.getPart(ArcpocalypseClient.ARC_MODEL_LAYER));
@@ -65,13 +73,27 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 	@Inject(method = "renderArm", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/PlayerEntityModel;setAngles(Lnet/minecraft/entity/LivingEntity;FFFFF)V", shift = At.Shift.AFTER), cancellable = true)
 	private void neko$renderArm(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, ModelPart arm, ModelPart sleeve, CallbackInfo ci) {
 		if(player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
-			arm = arm == this.model.rightArm ? this.MODEL.rightArm : this.MODEL.leftArm;
-			this.MODEL.handSwingProgress = 0.0F;
-			this.MODEL.sneaking = false;
-			this.MODEL.leaningPitch = 0.0F;
-			this.MODEL.setAngles(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-			this.MODEL.rightArm.roll -= 0.533;
-			this.MODEL.leftArm.roll += 0.533;
+			NekoArcModel playerEntityModel = this.MODEL;
+			arm = arm == this.model.rightArm ? playerEntityModel.rightArm : playerEntityModel.leftArm;
+			BipedEntityModel.ArmPose armPose = getArmPose(player, Hand.MAIN_HAND);
+			BipedEntityModel.ArmPose armPose2 = getArmPose(player, Hand.OFF_HAND);
+			if (armPose.isTwoHanded()) {
+				armPose2 = player.getOffHandStack().isEmpty() ? BipedEntityModel.ArmPose.EMPTY : BipedEntityModel.ArmPose.ITEM;
+			}
+
+			if (player.getMainArm() == Arm.RIGHT) {
+				playerEntityModel.rightArmPose = armPose;
+				playerEntityModel.leftArmPose = armPose2;
+			} else {
+				playerEntityModel.rightArmPose = armPose2;
+				playerEntityModel.leftArmPose = armPose;
+			}
+			playerEntityModel.handSwingProgress = 0.0F;
+			playerEntityModel.sneaking = false;
+			playerEntityModel.leaningPitch = 0.0F;
+			playerEntityModel.setAngles(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			playerEntityModel.rightArm.roll -= 0.533;
+			playerEntityModel.leftArm.roll += 0.533;
 			matrices.scale(1.5F, 1.5F, 1.5F);
 			arm.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURE)), light, OverlayTexture.DEFAULT_UV);
 			ci.cancel();
@@ -81,6 +103,19 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 	@Inject(method = "render(Lnet/minecraft/client/network/AbstractClientPlayerEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
 	private void neko$render(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, CallbackInfo callbackInfo) {
 		if(player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
+			BipedEntityModel.ArmPose armPose = getArmPose(player, Hand.MAIN_HAND);
+			BipedEntityModel.ArmPose armPose2 = getArmPose(player, Hand.OFF_HAND);
+			if (armPose.isTwoHanded()) {
+				armPose2 = player.getOffHandStack().isEmpty() ? BipedEntityModel.ArmPose.EMPTY : BipedEntityModel.ArmPose.ITEM;
+			}
+
+			if (player.getMainArm() == Arm.RIGHT) {
+				this.MODEL.rightArmPose = armPose;
+				this.MODEL.leftArmPose = armPose2;
+			} else {
+				this.MODEL.rightArmPose = armPose2;
+				this.MODEL.leftArmPose = armPose;
+			}
 			matrixStack.push();
 			this.MODEL.handSwingProgress = this.getHandSwingProgress(player, tickDelta);
 			this.MODEL.riding = player.hasVehicle();
@@ -156,10 +191,10 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			if (renderLayer != null) {
 				VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(renderLayer);
 				int p = getOverlay(player, this.getAnimationCounter(player, tickDelta));
-				if((!this.MODEL.eyes.visible && player.getRandom().nextFloat() > 0.90f) && !player.isSleeping()) {
+				if((!this.MODEL.eyes.visible && player.getRandom().nextFloat() > 0.90f) && !player.isSleeping() || player.isSneaking()) {
 					this.MODEL.eyes.visible = true;
 				}
-				if((player.getRandom().nextFloat() > 0.997f && this.MODEL.eyes.visible) || player.isSleeping()) {
+				if(((player.getRandom().nextFloat() > 0.997f && this.MODEL.eyes.visible) || player.isSleeping()) && !player.isSneaking()) {
 					this.MODEL.eyes.visible = false;
 				}
 				this.MODEL.render(matrixStack, vertexConsumer, light, p, 1.0F, 1.0F, 1.0F, bl2 ? 0.15F : 1.0F);

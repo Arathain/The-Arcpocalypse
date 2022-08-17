@@ -4,7 +4,6 @@ import arathain.arcpocalypse.ArcpocalypseComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -31,7 +30,7 @@ public abstract class LivingEntityMixin extends Entity {
 	private void neko$travelVertical(Vec3d movementInput, CallbackInfo ci) {
 		if(this.verticalCollision && ((LivingEntity)(Object)this) instanceof ServerPlayerEntity plr && this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			Vec3d vec = this.getPos().subtract(this.prevX, this.prevY, this.prevZ);
-			this.world.createExplosion(this, null, null, this.getX(), this.getY(), this.getZ(), (float) vec.lengthSquared() * 2, true, plr.interactionManager.getGameMode().isBlockBreakingRestricted() ? Explosion.DestructionType.NONE : Explosion.DestructionType.BREAK);
+			this.world.createExplosion(this, null, null, this.getX(), this.getY(), this.getZ(), (float) vec.lengthSquared() * 2 * Math.abs(plr.getPitch() / 90f), true, plr.interactionManager.getGameMode().isBlockBreakingRestricted() ? Explosion.DestructionType.NONE : Explosion.DestructionType.BREAK);
 		}
 	}
 }

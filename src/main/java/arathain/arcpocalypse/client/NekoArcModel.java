@@ -233,8 +233,10 @@ public class NekoArcModel extends BipedEntityModel<PlayerEntity> {
 			this.rightLeg.pitch = MathHelper.lerp(this.leaningPitch, this.rightLeg.pitch, 0.3F * MathHelper.cos(f * 0.33333334F));
 		}
 		this.tail.pivotY = 7.0f;
-		this.rightArm.roll += 0.523;
-		this.leftArm.roll -= 0.523;
+		if(this.rightArmPose == ArmPose.ITEM || this.rightArmPose == ArmPose.EMPTY)
+			this.rightArm.roll += 0.523;
+		if(this.leftArmPose == ArmPose.ITEM || this.leftArmPose == ArmPose.EMPTY)
+			this.leftArm.roll -= 0.523;
 		this.leftLeg.visible = !livingEntity.isFallFlying();
 		this.rightLeg.visible = !livingEntity.isFallFlying();
 
@@ -279,40 +281,36 @@ public class NekoArcModel extends BipedEntityModel<PlayerEntity> {
 	}
 	private void positionRightArm(PlayerEntity entity) {
 		switch (this.rightArmPose) {
-			case EMPTY:
-				this.rightArm.yaw = 0.0F;
-				break;
-			case BLOCK:
+			case EMPTY -> this.rightArm.yaw = 0.0F;
+			case BLOCK -> {
 				this.rightArm.pitch = this.rightArm.pitch * 0.5F - 0.9424779F;
 				this.rightArm.yaw = -0.5235988F;
-				break;
-			case ITEM:
+			}
+			case ITEM -> {
 				this.rightArm.pitch = this.rightArm.pitch * 0.5F - 0.31415927F;
 				this.rightArm.yaw = 0.0F;
-				break;
-			case THROW_SPEAR:
+			}
+			case THROW_SPEAR -> {
 				this.rightArm.pitch = this.rightArm.pitch * 0.5F - 3.1415927F;
 				this.rightArm.yaw = 0.0F;
-				break;
-			case BOW_AND_ARROW:
+				this.rightArm.roll = -0.523F;
+			}
+			case BOW_AND_ARROW -> {
 				this.rightArm.yaw = -0.1F + this.head.yaw;
 				this.leftArm.yaw = 0.1F + this.head.yaw + 0.4F;
 				this.rightArm.pitch = -1.5707964F + this.head.pitch;
 				this.leftArm.pitch = -1.5707964F + this.head.pitch;
-				break;
-			case CROSSBOW_CHARGE:
-				CrossbowPosing.charge(this.rightArm, this.leftArm, entity, true);
-				break;
-			case CROSSBOW_HOLD:
-				CrossbowPosing.hold(this.rightArm, this.leftArm, this.head, true);
-				break;
-			case SPYGLASS:
+			}
+			case CROSSBOW_CHARGE -> CrossbowPosing.charge(this.rightArm, this.leftArm, entity, true);
+			case CROSSBOW_HOLD -> CrossbowPosing.hold(this.rightArm, this.leftArm, this.head, true);
+			case SPYGLASS -> {
 				this.rightArm.pitch = MathHelper.clamp(this.head.pitch - 1.9198622F - (entity.isInSneakingPose() ? 0.2617994F : 0.0F), -2.4F, 3.3F);
 				this.rightArm.yaw = this.head.yaw - 0.2617994F;
-				break;
-			case TOOT_HORN:
+			}
+			case TOOT_HORN -> {
 				this.rightArm.pitch = MathHelper.clamp(this.head.pitch, -1.2F, 1.2F) - 1.4835298F;
 				this.rightArm.yaw = this.head.yaw - 0.5235988F;
+			}
 		}
 
 	}
@@ -333,6 +331,7 @@ public class NekoArcModel extends BipedEntityModel<PlayerEntity> {
 			case THROW_SPEAR:
 				this.leftArm.pitch = this.leftArm.pitch * 0.5F - 3.1415927F;
 				this.leftArm.yaw = 0.0F;
+				this.leftArm.roll = 0.523F;
 				break;
 			case BOW_AND_ARROW:
 				this.rightArm.yaw = -0.1F + this.head.yaw - 0.4F;
