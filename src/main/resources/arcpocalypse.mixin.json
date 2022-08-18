@@ -8,6 +8,7 @@
     "PlayerEntityMixin"
   ],
   "client": [
+    "BipedEntityModelMixin",
     "HeldItemFeatureRendererMixin",
     "PlayerEntityRendererMixin"
   ],

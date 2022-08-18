@@ -65,7 +65,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	@Inject(method = "tick", at = @At("HEAD"))
 	public void neko$tick(CallbackInfo info) {
 		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
-			if(this.isSneaking()) {
+			if(this.isSneaking() && this.isSprinting()) {
 				Vec3d rotation = this.getRotationVector();
 				if(world.isClient) {
 					ParticleBuilders.WorldParticleBuilder builder = ParticleBuilders.create(OrtusParticles.SMOKE_PARTICLE)

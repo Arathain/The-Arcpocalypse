@@ -8,7 +8,7 @@ import net.minecraft.nbt.NbtCompound;
 import virtuoel.pehkui.api.ScaleData;
 
 public class NekoArcComponent implements AutoSyncedComponent {
-	public static final float ARC_WIDTH = 0.625f / EntityType.PLAYER.getWidth();
+	public static final float ARC_WIDTH = 0.6f / EntityType.PLAYER.getWidth();
 	public static final float ARC_HEIGHT = 1.375f / EntityType.PLAYER.getHeight();
 	private final PlayerEntity obj;
 	private boolean arc = false;

@@ -1,5 +1,6 @@
 package arathain.arcpocalypse;
 
+import arathain.arcpocalypse.common.ArcpocalypseEntities;
 import arathain.arcpocalypse.common.NekoArcScaleType;
 import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
@@ -33,6 +34,7 @@ public class Arcpocalypse implements ModInitializer {
 	@Override
 	public void onInitialize(ModContainer mod) {
 		NekoArcScaleType.init();
+		ArcpocalypseEntities.init();
 		EntityElytraEvents.CUSTOM.register((entity, tickElytra) -> entity instanceof PlayerEntity && entity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc());
 		UseItemCallback.EVENT.register((player, world, hand) -> {
 			if(player.getStackInHand(hand).getItem().equals(Items.MILK_BUCKET) && player.isSneaking()) {

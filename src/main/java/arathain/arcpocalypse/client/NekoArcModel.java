@@ -1,6 +1,7 @@
 package arathain.arcpocalypse.client;
 
 import arathain.arcpocalypse.Arcpocalypse;
+import arathain.arcpocalypse.common.AbyssLiftEntity;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
@@ -82,6 +83,9 @@ public class NekoArcModel extends BipedEntityModel<PlayerEntity> {
 	}
 	@Override
 	public void setAngles(PlayerEntity livingEntity, float f, float g, float h, float i, float j) {
+		if (livingEntity.hasVehicle() && livingEntity.getVehicle() instanceof AbyssLiftEntity) {
+			this.riding = false;
+		}
 		boolean bl = livingEntity.getRoll() > 4;
 		boolean bl2 = livingEntity.isInSwimmingPose();
 		this.head.yaw = i * 0.017453292F;
