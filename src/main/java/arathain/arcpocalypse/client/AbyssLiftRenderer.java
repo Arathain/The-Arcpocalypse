@@ -46,7 +46,7 @@ public class AbyssLiftRenderer extends EntityRenderer<AbyssLiftEntity> {
 		float distanceX = (float) (vec.x - entity.getX());
 		float distanceY = (float) (vec.y - (entity.getY() + 2));
 		float distanceZ = (float) (vec.z - entity.getZ());
-		stack.translate(0, 1.2, 0);
+		stack.translate(0, 1.0, 0);
 
 		renderChain(distanceX, distanceY, distanceZ, tickDelta, entity.age, stack, vertexConsumers, light);
 		stack.pop();

@@ -38,8 +38,7 @@ public class Arcpocalypse implements ModInitializer {
 		EntityElytraEvents.CUSTOM.register((entity, tickElytra) -> entity instanceof PlayerEntity && entity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc());
 		UseItemCallback.EVENT.register((player, world, hand) -> {
 			if(player.getStackInHand(hand).getItem().equals(Items.MILK_BUCKET) && player.isSneaking()) {
-				System.out.println(!player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc());
-				player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setArc(!player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc());
+				player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setArc(false);
 				return TypedActionResult.success(player.getStackInHand(hand));
 			}
 			return TypedActionResult.pass(player.getStackInHand(hand));
