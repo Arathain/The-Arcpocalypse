@@ -98,6 +98,13 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 	@Override
 	public void tick() {
 		super.tick();
+		this.prevX = this.getX();
+		this.prevY = this.getY();
+		this.prevZ = this.getZ();
+		this.lastRenderX = this.getX();
+		this.lastRenderY = this.getY();
+		this.lastRenderZ = this.getZ();
+
 		if(this.getTargetPos().equals(BlockPos.ORIGIN)) {
 			this.setTargetPos(this.getBlockPos().add(0, 3, 0));
 		}
@@ -170,7 +177,8 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 					if(this.hasPassengers()) {
 						Entity entity = this.getFirstPassenger();
 						entity.stopRiding();
-						entity.setPosition(entity.getPos().add(this.getRotationVector(this.getPitch(), this.getYaw())));
+						Vec3d vec = this.getPos().add(MathHelper.cos((float) (this.getYaw()*Math.PI/180f)), 0, MathHelper.sin((float) (this.getYaw()*Math.PI/180f)));
+						entity.refreshPositionAndAngles(vec.x, vec.y, vec.z, this.getYaw(), this.getPitch());
 					}
 					this.descentTicks = 0;
 				}

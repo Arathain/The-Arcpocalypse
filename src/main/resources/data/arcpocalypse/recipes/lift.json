@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "_A_",
+    "E E",
+    "_A_"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:echo_shard"
+    },
+    "A": {
+      "item": "minecraft:ancient_debris"
+    },
+    "_": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "arcpocalypse:abyss_lift"
+  }
+}
