@@ -4,26 +4,36 @@ import arathain.arcpocalypse.ArcpocalypseComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.HorseBaseEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.entity.vehicle.MinecartEntity;
+import net.minecraft.item.PickaxeItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.quiltmc.qsl.entity.multipart.api.EntityPart;
 import org.quiltmc.qsl.entity.multipart.api.MultipartEntity;
+
+import java.util.List;
+import java.util.Objects;
 
 public class AbyssLiftEntity extends Entity implements MultipartEntity {
 	private int descentTicks = 0;
@@ -42,6 +52,28 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 	@Override
 	public boolean collides() {
 		return !this.isRemoved();
+	}
+
+	@Override
+	public boolean isCollidable() {
+		return true;
+	}
+
+	@Override
+	public boolean damage(DamageSource source, float amount) {
+		if (this.world.isClient() || !this.isAlive()) return false;
+
+		if (this.isInvulnerableTo(source))
+			return false;
+
+		if ((source.isSourceCreativePlayer() && source.getAttacker() instanceof PlayerEntity plr && plr.isSneaking()) ||  (source.getAttacker() instanceof PlayerEntity player && player.getStackInHand(Hand.MAIN_HAND).getItem() instanceof PickaxeItem && player.getAbilities().allowModifyWorld && player.isSneaking())) {
+			ItemScatterer.spawn(this.world, this.getX(), this.getY(), this.getZ(), ArcpocalypseItems.ABYSS_LIFT.getDefaultStack());
+			this.discard();
+			return true;
+		}
+
+
+		return true;
 	}
 
 	@Override
@@ -72,6 +104,18 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 		if(!world.isClient() && canDescend()) {
 			this.descendTick();
 		}
+		List<Entity> list = this.world.getOtherEntities(this, this.getBoundingBox().expand(0.2F, -0.01F, 0.2F), EntityPredicates.canBePushedBy(this));
+		if (!list.isEmpty()) {
+			boolean bl = !this.world.isClient && !(this.getPrimaryPassenger() instanceof PlayerEntity);
+
+			for (Entity value : list) {
+				if (!value.hasPassenger(this)) {
+					if (bl && !this.hasPassengers() && !value.hasVehicle() && value.getWidth() < this.getWidth() && value instanceof CatEntity) {
+						value.startRiding(this);
+					}
+				}
+			}
+		}
 
 	}
 	private boolean canDescend() {
@@ -83,7 +127,12 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 				break;
 			}
 		}
-		return bl && this.hasPassengers();
+		return bl && ((hasMittyAndNanachi() && this.hasPassengers()) || this.descentTicks >= 100);
+	}
+	private boolean hasMittyAndNanachi() {
+		boolean cat = !this.world.getOtherEntities(this, this.getBoundingBox().expand(2), entity -> entity instanceof AbyssLiftEntity ent && ent.hasPassengers() && ent.getFirstPassenger() instanceof CatEntity).isEmpty();
+		boolean player = !this.world.getOtherEntities(this, this.getBoundingBox().expand(2), entity -> entity instanceof AbyssLiftEntity ent && ent.hasPassengers() && ent.getFirstPassenger() instanceof PlayerEntity).isEmpty();
+		return (this.getFirstPassenger() instanceof PlayerEntity && cat) || (this.getFirstPassenger() instanceof CatEntity && player);
 	}
 	@Override
 	public ActionResult interact(PlayerEntity player, Hand hand) {
@@ -105,8 +154,11 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 				this.setVelocity(0, 1, 0);
 				if(this.getFirstPassenger() instanceof LivingEntity l) {
 					l.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 40, 0));
+					l.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 40, 0));
 					if(l instanceof PlayerEntity && random.nextFloat() > 0.98f && !l.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 						l.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setArc(true);
+					} else if(l instanceof CatEntity) {
+						l.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 40, 0));
 					}
 				}
 			}
@@ -115,9 +167,11 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 					this.descentTicks = 100;
 				this.descentTicks++;
 				if(this.descentTicks >= 160) {
-					Entity entity = this.getFirstPassenger();
-					entity.stopRiding();
-					entity.setPosition(entity.getPos().add(this.getRotationVector(this.getPitch(), this.getYaw())));
+					if(this.hasPassengers()) {
+						Entity entity = this.getFirstPassenger();
+						entity.stopRiding();
+						entity.setPosition(entity.getPos().add(this.getRotationVector(this.getPitch(), this.getYaw())));
+					}
 					this.descentTicks = 0;
 				}
 			}

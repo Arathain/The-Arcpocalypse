@@ -36,8 +36,9 @@ public class AbyssLiftRenderer extends EntityRenderer<AbyssLiftEntity> {
 	@Override
 	public void render(AbyssLiftEntity entity, float yaw, float tickDelta, MatrixStack stack, VertexConsumerProvider vertexConsumers, int light) {
 		model.setAngles(entity, tickDelta, 0F, entity.age + tickDelta, entity.getYaw(), entity.getPitch());
-		VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURE, true));
+		VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURE));
 		stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
+		stack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(yaw));
 		stack.translate(0, -1.4, 0);
 		model.render(stack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
 		stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
