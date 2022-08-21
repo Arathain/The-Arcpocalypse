@@ -2,17 +2,17 @@ package arathain.arcpocalypse.mixin;
 
 import arathain.arcpocalypse.Arcpocalypse;
 import arathain.arcpocalypse.ArcpocalypseComponents;
-import com.sammy.ortus.setup.OrtusParticles;
+import arathain.arcpocalypse.common.ArcpocalypseSoundEvents;
 import com.sammy.ortus.systems.rendering.particle.Easing;
 import com.sammy.ortus.systems.rendering.particle.ParticleBuilders;
 import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.hit.BlockHitResult;
@@ -21,7 +21,6 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
@@ -31,11 +30,15 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import static com.sammy.ortus.setup.OrtusParticles.*;
 
 import java.awt.*;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
+	@Unique
+	private int ambientSoundChance;
 
 	@Shadow
 	protected abstract void damageShield(float amount);
@@ -62,14 +65,39 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 			}
 		}
 	}
+	@Inject(method = "getDeathSound()Lnet/minecraft/sound/SoundEvent;", at = @At("HEAD"), cancellable = true)
+	private void neko$death(CallbackInfoReturnable<SoundEvent> cir) {
+		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
+			cir.setReturnValue(ArcpocalypseSoundEvents.ENTITY_ARC_DEATH);
+		}
+	}
+	@Inject(method = "getHurtSound", at = @At("HEAD"), cancellable = true)
+	private void neko$hurt(CallbackInfoReturnable<SoundEvent> cir) {
+		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
+			cir.setReturnValue(ArcpocalypseSoundEvents.ENTITY_ARC_HURT);
+		}
+	}
 
+	@Override
+	public float getSoundPitch() {
+		return this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc() ? 1 : super.getSoundPitch();
+	}
 	@Inject(method = "tick", at = @At("HEAD"))
 	public void neko$tick(CallbackInfo info) {
 		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
+			if (this.isAlive() && this.random.nextInt(2000) < this.ambientSoundChance++) {
+				this.ambientSoundChance = -40;
+				this.playSound((this.getAttacking() != null || this.getAttacker() != null || this.lastAttackedTicks < 100) ? ArcpocalypseSoundEvents.ENTITY_ARC_TAUNT : ArcpocalypseSoundEvents.ENTITY_ARC_AMBIENT, this.getSoundVolume(), 1);
+			}
+
 			if(this.isSneaking() && this.isSprinting()) {
 				Vec3d rotation = this.getRotationVector();
+				if(world.getTime() % 14 == 0) {
+					this.playSound(ArcpocalypseSoundEvents.ENTITY_ARC_BEAM, this.getSoundVolume(), 1);
+				}
 				if(world.isClient) {
-					ParticleBuilders.WorldParticleBuilder builder = ParticleBuilders.create(OrtusParticles.SMOKE_PARTICLE)
+					ParticleBuilders.WorldParticleBuilder builder;
+					builder = ParticleBuilders.create(SMOKE_PARTICLE)
 							.setScale(0.2f + random.nextFloat() * 0.1f, 0)
 							.setLifetime(20 + random.nextInt(10))
 							.setAlpha(1.0f, 0.0f)
@@ -134,7 +162,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 						rotation.z * speed + (rotation.z * 1.5D - velocity.z) * speed));
 				if (world.isClient) {
 					Vec3d vector = new Vec3d(this.getX() + this.getRotationVector().negate().multiply(0.3).x, this.getY() + this.getRotationVector().negate().multiply(0.3).y, this.getZ() + this.getRotationVector().negate().multiply(0.3).z);
-					ParticleBuilders.create(OrtusParticles.SMOKE_PARTICLE)
+					ParticleBuilders.create(SMOKE_PARTICLE)
 							.setScale(0.5f + random.nextFloat() * 0.1f, 0)
 							.setLifetime(50 + random.nextInt(10))
 							.setAlpha(0.9f, 0.0f)
@@ -147,7 +175,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 							.addMotion(0, 0f - random.nextFloat() * 0.01f, 0)
 							.enableNoClip()
 							.spawn(world, vector.x, vector.y, vector.z);
-					ParticleBuilders.create(OrtusParticles.STAR_PARTICLE)
+					ParticleBuilders.create(STAR_PARTICLE)
 							.setScale(0.7f + random.nextFloat() * 0.2f, 0)
 							.setLifetime(20 + random.nextInt(6))
 							.setAlpha(0.9f, 0.0f)

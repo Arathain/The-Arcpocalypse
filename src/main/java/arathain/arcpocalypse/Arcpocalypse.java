@@ -2,6 +2,7 @@ package arathain.arcpocalypse;
 
 import arathain.arcpocalypse.common.ArcpocalypseEntities;
 import arathain.arcpocalypse.common.ArcpocalypseItems;
+import arathain.arcpocalypse.common.ArcpocalypseSoundEvents;
 import arathain.arcpocalypse.common.NekoArcScaleType;
 import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
@@ -37,6 +38,7 @@ public class Arcpocalypse implements ModInitializer {
 		NekoArcScaleType.init();
 		ArcpocalypseEntities.init();
 		ArcpocalypseItems.init();
+		ArcpocalypseSoundEvents.init();
 		EntityElytraEvents.CUSTOM.register((entity, tickElytra) -> entity instanceof PlayerEntity && entity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc());
 	}
 	public static EntityHitResult hitscanEntity(World world, LivingEntity user, double distance, Predicate<Entity> targetPredicate){

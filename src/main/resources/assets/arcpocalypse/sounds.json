@@ -1,0 +1,44 @@
+{
+  "entity.nekoarcplayer.idle": {
+    "sounds": [
+      "arcpocalypse:idle_1",
+      "arcpocalypse:idle_2",
+      "arcpocalypse:idle_3"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.nekoarc.idle"
+  },
+  "entity.nekoarcplayer.taunt": {
+    "sounds": [
+      "arcpocalypse:taunt_1",
+      "arcpocalypse:taunt_2",
+      "arcpocalypse:taunt_3"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.nekoarc.attack"
+  },
+  "entity.nekoarcplayer.hurt": {
+    "sounds": [
+      "arcpocalypse:hurt_1",
+      "arcpocalypse:hurt_2",
+      "arcpocalypse:hurt_3",
+      "arcpocalypse:hurt_4",
+      "arcpocalypse:hurt_5",
+      "arcpocalypse:hurt_6",
+      "arcpocalypse:hurt_7",
+      "arcpocalypse:hurt_8",
+      "arcpocalypse:hurt_9"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.nekoarc.hurt"
+  },
+  "entity.nekoarcplayer.death": {
+    "sounds": [
+      "arcpocalypse:death_1"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.nekoarc.death"
+  },
+  "entity.nekoarcplayer.beam": {
+    "sounds": [
+      "arcpocalypse:beam"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.nekoarc.beam"
+  }
+}
