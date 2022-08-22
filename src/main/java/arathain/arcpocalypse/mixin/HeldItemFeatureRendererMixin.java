@@ -60,7 +60,7 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90.0F));
 			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
 			boolean bl = arm == Arm.LEFT;
-			matrices.translate((double)((float)(bl ? -1 : 1) / 16.0F), 0.125, -0.225);
+			matrices.translate((double)((float)(bl ? -4 : 4) / 16.0F), 0.125, 0);
 			this.heldItemRenderer.renderItem(entity, stack, transformationMode, bl, matrices, vertexConsumers, light);
 			matrices.pop();
 			ci.cancel();
