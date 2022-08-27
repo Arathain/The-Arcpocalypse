@@ -78,9 +78,74 @@ public class NekoArcModel extends BipedEntityModel<PlayerEntity> {
 
 		ModelPartData tail = modelPartData.addChild("tail", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 17.0F, 1.0F));
 
-		ModelPartData cube_r1 = tail.addChild("cube_r1", ModelPartBuilder.create().uv(32, 56).cuboid(-0.5F, -1.0F, -0.7F, 1.0F, 1.0F, 7.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, -0.7418F, 0.0F, 0.0F));
+		ModelPartData cube_r1 = tail.addChild("cube_r1", ModelPartBuilder.create().uv(32, 56).cuboid(-0.5F, -1.0F, -0.7F, 1.0F, 1.0F, 7.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 4.2F, 0.0F, -0.7418F, 0.0F, 0.0F));
 		return TexturedModelData.of(modelData, 64, 64);
 	}
+
+	public static TexturedModelData getTexturedMaidModelData() {
+		ModelData modelData = new ModelData();
+		ModelPartData modelPartData = modelData.getRoot();
+		ModelPartData hat = modelPartData.addChild("hat", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 10.0F, 0.0F));
+
+		ModelPartData leftear_r1 = hat.addChild("leftear_r1", ModelPartBuilder.create().uv(28, 37).cuboid(3.0F, -1.0F, -0.5F, 3.0F, 3.0F, 1.0F, new Dilation(0.3F)), ModelTransform.of(0.0F, -7.0F, 0.0F, 0.0F, 0.0F, -0.2182F));
+
+		ModelPartData ear_r1 = hat.addChild("ear_r1", ModelPartBuilder.create().uv(28, 33).cuboid(-6.0F, -1.0F, -0.5F, 3.0F, 3.0F, 1.0F, new Dilation(0.3F)), ModelTransform.of(0.0F, -7.0F, 0.0F, 0.0F, 0.0F, 0.2182F));
+
+		ModelPartData head = modelPartData.addChild("head", ModelPartBuilder.create().uv(0, 9).cuboid(-4.0F, -7.0F, -3.0F, 8.0F, 7.0F, 6.0F, new Dilation(0.0F))
+				.uv(0, 44).cuboid(-3.5F, -3.5F, -4.01F, 7.0F, 4.0F, 1.0F, new Dilation(-1.0F))
+				.uv(34, 49).cuboid(-5.0F, -10.0F, -2.0F, 10.0F, 5.0F, 0.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 10.0F, 0.0F));
+
+		ModelPartData hair_r1 = head.addChild("hair_r1", ModelPartBuilder.create().uv(44, 26).cuboid(-2.0F, -1.0F, -3.0F, 2.0F, 8.0F, 6.0F, new Dilation(0.1F)), ModelTransform.of(4.0F, -7.0F, 0.0F, 0.0F, 0.0F, -0.3054F));
+
+		ModelPartData otherhair_r1 = head.addChild("otherhair_r1", ModelPartBuilder.create().uv(46, 12).cuboid(0.0F, -1.0F, -3.0F, 2.0F, 8.0F, 6.0F, new Dilation(0.1F)), ModelTransform.of(-4.0F, -7.0F, 0.0F, 0.0F, 0.0F, 0.3054F));
+
+		ModelPartData bowtie_r1 = head.addChild("bowtie_r1", ModelPartBuilder.create().uv(8, 22).cuboid(-3.0F, 1.0F, -0.8F, 6.0F, 4.0F, 1.0F, new Dilation(0.25F))
+				.uv(22, 23).cuboid(-4.0F, 0.0F, -3.0F, 8.0F, 7.0F, 3.0F, new Dilation(0.1F)), ModelTransform.of(0.0F, -7.0F, 3.0F, 0.3491F, 0.0F, 0.0F));
+
+		ModelPartData HeadLayer_r1 = head.addChild("HeadLayer_r1", ModelPartBuilder.create().uv(0, 0).cuboid(-4.0F, -5.0F, -3.0F, 8.0F, 3.0F, 6.0F, new Dilation(0.3F)), ModelTransform.of(0.0F, -2.0F, 0.0F, -0.0436F, 0.0F, 0.0F));
+
+		ModelPartData eyes = head.addChild("eyes", ModelPartBuilder.create().uv(48, 3).cuboid(-3.8F, -4.0F, -3.5F, 3.0F, 2.0F, 1.0F, new Dilation(0.3F))
+				.uv(56, 0).cuboid(-3.8F, -4.0F, -3.6F, 3.0F, 2.0F, 1.0F, new Dilation(0.4F))
+				.uv(56, 3).cuboid(0.8F, -4.0F, -3.5F, 3.0F, 2.0F, 1.0F, new Dilation(0.3F))
+				.uv(48, 0).cuboid(0.8F, -4.0F, -3.6F, 3.0F, 2.0F, 1.0F, new Dilation(0.4F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+
+		ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create().uv(28, 13).cuboid(-3.0F, -6.0F, -1.5F, 6.0F, 7.0F, 3.0F, new Dilation(0.0F))
+				.uv(47, 6).cuboid(-1.0F, -7.0F, -1.0F, 2.0F, 1.0F, 2.0F, new Dilation(0.0F))
+				.uv(31, 0).cuboid(-1.0F, -6.4F, -1.0F, 2.0F, 1.0F, 2.0F, new Dilation(0.2F))
+				.uv(16, 41).cuboid(-3.0F, -6.0F, -1.5F, 6.0F, 7.0F, 3.0F, new Dilation(0.1F))
+				.uv(1, 58).cuboid(-3.0F, -6.2F, -2.2F, 6.0F, 3.0F, 1.0F, new Dilation(-0.5F)), ModelTransform.pivot(0.0F, 17.0F, 0.0F));
+
+		ModelPartData skirtoverlayfront_r1 = body.addChild("skirtoverlayfront_r1", ModelPartBuilder.create().uv(0, 37).cuboid(-3.0F, 0.0F, -1.5F, 6.0F, 5.0F, 2.0F, new Dilation(0.05F))
+				.uv(0, 50).cuboid(-3.0F, 0.0F, -1.5F, 6.0F, 6.0F, 2.0F, new Dilation(-0.001F)), ModelTransform.of(0.0F, -1.0F, 0.0F, -0.1309F, 0.0F, 0.0F));
+
+		ModelPartData skirtoverlayleft_r1 = body.addChild("skirtoverlayleft_r1", ModelPartBuilder.create().uv(34, 41).cuboid(-0.975F, -0.1F, -1.5F, 2.0F, 5.0F, 3.0F, new Dilation(0.01F))
+				.uv(0, 28).cuboid(-0.975F, -0.1F, -1.5F, 2.0F, 6.0F, 3.0F, new Dilation(-0.001F)), ModelTransform.of(2.0F, -1.0F, 0.0F, 0.0F, 0.0F, -0.1309F));
+
+		ModelPartData skirtoverlayright_r1 = body.addChild("skirtoverlayright_r1", ModelPartBuilder.create().uv(44, 41).cuboid(-1.025F, -0.1F, -1.5F, 2.0F, 5.0F, 3.0F, new Dilation(0.01F))
+				.uv(10, 28).cuboid(-1.025F, -0.1F, -1.5F, 2.0F, 6.0F, 3.0F, new Dilation(-0.001F)), ModelTransform.of(-2.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.1309F));
+
+		ModelPartData skirtback_r1 = body.addChild("skirtback_r1", ModelPartBuilder.create().uv(16, 51).cuboid(-3.0F, 0.0F, -0.5F, 6.0F, 6.0F, 2.0F, new Dilation(-0.0001F)), ModelTransform.of(0.0F, -1.0F, 0.0F, 0.1309F, 0.0F, 0.0F));
+
+		ModelPartData right_arm = modelPartData.addChild("right_arm", ModelPartBuilder.create().uv(0, 22).cuboid(-1.0F, -1.2F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F))
+				.uv(39, 0).cuboid(-1.0F, -1.2F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.2F))
+				.uv(52, 6).cuboid(-1.5F, 2.8F, -1.5F, 3.0F, 3.0F, 3.0F, new Dilation(0.0F)), ModelTransform.of(-3.0F, 13.0F, 0.0F, 0.0F, 0.0F, 0.5236F));
+
+		ModelPartData right_leg = modelPartData.addChild("right_leg", ModelPartBuilder.create().uv(36, 33).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 6.0F, 2.0F, new Dilation(0.0F))
+				.uv(29, 6).cuboid(-1.0F, 4.0F, -2.0F, 2.0F, 2.0F, 1.0F, new Dilation(0.0F)), ModelTransform.pivot(-1.9F, 18.0F, 0.0F));
+
+		ModelPartData left_leg = modelPartData.addChild("left_leg", ModelPartBuilder.create().uv(20, 33).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 6.0F, 2.0F, new Dilation(0.0F))
+				.uv(29, 9).cuboid(-1.0F, 4.0F, -2.0F, 2.0F, 2.0F, 1.0F, new Dilation(0.0F)), ModelTransform.pivot(1.9F, 18.0F, 0.0F));
+
+		ModelPartData left_arm = modelPartData.addChild("left_arm", ModelPartBuilder.create().uv(37, 6).cuboid(-1.0F, -1.2F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F))
+				.uv(44, 10).cuboid(-1.0F, -1.2F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.2F))
+				.uv(22, 0).cuboid(-1.5F, 2.8F, -1.5F, 3.0F, 3.0F, 3.0F, new Dilation(0.0F)), ModelTransform.of(3.0F, 13.0F, 0.0F, 0.0F, 0.0F, -0.5236F));
+
+		ModelPartData tail = modelPartData.addChild("tail", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 17.0F, 1.0F));
+
+		ModelPartData tail_r1 = tail.addChild("tail_r1", ModelPartBuilder.create().uv(28, 5).cuboid(-0.5F, -1.0F, -0.7F, 1.0F, 1.0F, 7.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 4.1F, 0, -0.7418F, 0.0F, 0.0F));
+		return TexturedModelData.of(modelData, 64, 64);
+	}
+
 	@Override
 	public void setAngles(PlayerEntity livingEntity, float f, float g, float h, float i, float j) {
 		if (livingEntity.hasVehicle() && livingEntity.getVehicle() instanceof AbyssLiftEntity) {
@@ -321,41 +386,36 @@ public class NekoArcModel extends BipedEntityModel<PlayerEntity> {
 
 	private void positionLeftArm(PlayerEntity entity) {
 		switch (this.leftArmPose) {
-			case EMPTY:
-				this.leftArm.yaw = 0.0F;
-				break;
-			case BLOCK:
+			case EMPTY -> this.leftArm.yaw = 0.0F;
+			case BLOCK -> {
 				this.leftArm.pitch = this.leftArm.pitch * 0.5F - 0.9424779F;
 				this.leftArm.yaw = 0.5235988F;
-				break;
-			case ITEM:
+			}
+			case ITEM -> {
 				this.leftArm.pitch = this.leftArm.pitch * 0.5F - 0.31415927F;
 				this.leftArm.yaw = 0.0F;
-				break;
-			case THROW_SPEAR:
+			}
+			case THROW_SPEAR -> {
 				this.leftArm.pitch = this.leftArm.pitch * 0.5F - 3.1415927F;
 				this.leftArm.yaw = 0.0F;
 				this.leftArm.roll = 0.523F;
-				break;
-			case BOW_AND_ARROW:
+			}
+			case BOW_AND_ARROW -> {
 				this.rightArm.yaw = -0.1F + this.head.yaw - 0.4F;
 				this.leftArm.yaw = 0.1F + this.head.yaw;
 				this.rightArm.pitch = -1.5707964F + this.head.pitch;
 				this.leftArm.pitch = -1.5707964F + this.head.pitch;
-				break;
-			case CROSSBOW_CHARGE:
-				CrossbowPosing.charge(this.rightArm, this.leftArm, entity, false);
-				break;
-			case CROSSBOW_HOLD:
-				CrossbowPosing.hold(this.rightArm, this.leftArm, this.head, false);
-				break;
-			case SPYGLASS:
+			}
+			case CROSSBOW_CHARGE -> CrossbowPosing.charge(this.rightArm, this.leftArm, entity, false);
+			case CROSSBOW_HOLD -> CrossbowPosing.hold(this.rightArm, this.leftArm, this.head, false);
+			case SPYGLASS -> {
 				this.leftArm.pitch = MathHelper.clamp(this.head.pitch - 1.9198622F - (entity.isInSneakingPose() ? 0.2617994F : 0.0F), -2.4F, 3.3F);
 				this.leftArm.yaw = this.head.yaw + 0.2617994F;
-				break;
-			case TOOT_HORN:
+			}
+			case TOOT_HORN -> {
 				this.leftArm.pitch = MathHelper.clamp(this.head.pitch, -1.2F, 1.2F) - 1.4835298F;
 				this.leftArm.yaw = this.head.yaw + 0.5235988F;
+			}
 		}
 
 	}

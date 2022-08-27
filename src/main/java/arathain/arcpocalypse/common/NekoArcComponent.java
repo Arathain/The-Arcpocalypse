@@ -1,5 +1,6 @@
 package arathain.arcpocalypse.common;
 
+import arathain.arcpocalypse.Arcpocalypse;
 import arathain.arcpocalypse.ArcpocalypseComponents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.EntityType;
@@ -7,12 +8,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import virtuoel.pehkui.api.ScaleData;
 
+import java.util.Objects;
+
 public class NekoArcComponent implements AutoSyncedComponent {
 	public static final float ARC_WIDTH = 0.6f / EntityType.PLAYER.getWidth();
 	public static final float ARC_HEIGHT = 1.375f / EntityType.PLAYER.getHeight();
 	private final PlayerEntity obj;
 	private boolean arc = false;
 	private boolean flying = false;
+
+	private TypeNeco necoType = TypeNeco.ARC;
 
 	public NekoArcComponent(PlayerEntity obj) {
 		this.obj = obj;
@@ -45,13 +50,54 @@ public class NekoArcComponent implements AutoSyncedComponent {
 
 	@Override
 	public void readFromNbt(NbtCompound tag) {
+		necoType = TypeNeco.getNecoFromString(tag.getString("neco"));
 		arc = tag.getBoolean("nekoarcueidbrunestud");
 		flying = tag.getBoolean("flying");
 	}
 
 	@Override
 	public void writeToNbt(NbtCompound tag) {
+		tag.putString("neco", necoType.toString().toLowerCase());
 		tag.putBoolean("nekoarcueidbrunestud", arc);
 		tag.putBoolean("flying", flying);
+	}
+
+	public TypeNeco getNecoType() {
+		return necoType;
+	}
+
+	public void setNecoType(TypeNeco neco) {
+		necoType = neco;
+	}
+
+	// Add Texture thingy in here
+	public enum TypeNeco {
+		ARC("neko_arc", false),
+		CIEL("neco_ciel", false),
+		AKIHA("neco_akiha", false),
+		HISUI("neco_hisui", true),
+		KOHAKU("neco_kohaku", true);
+
+		public final String textureName;
+		public final boolean maidModel;
+
+		TypeNeco(String textureName, boolean maidModel) {
+			this.textureName = textureName;
+			this.maidModel = maidModel;
+		}
+
+		public static TypeNeco getNecoFromString(String string) {
+			return switch (string) {
+				case "ciel" -> CIEL;
+				case "akiha" -> AKIHA;
+				case "hisui" -> HISUI;
+				case "kohaku" -> KOHAKU;
+				default -> ARC;
+			};
+		}
+
+		public String toString() {
+			return super.toString();
+		}
 	}
 }

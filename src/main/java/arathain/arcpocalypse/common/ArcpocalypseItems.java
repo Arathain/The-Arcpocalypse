@@ -16,6 +16,14 @@ public class ArcpocalypseItems {
 	// entities
 	public static final Item ABYSS_LIFT = createItem("abyss_lift", new AbyssLiftItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC)));
 
+	// Neco transform items
+	public static final Item LUNAR_DIAMOND = createItem("lunar_diamond", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.ARC)); // RENAME TO SOMETHING MORE CLEVER
+	public static final Item NOT_A_CROSS = createItem("holy_math_symbol", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.CIEL));
+	public static final Item LUXURIOUS_EMBLEM = createItem("luxurious_emblem", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.AKIHA));
+	public static final Item ORDINARY_PAN = createItem("ordinary_pan", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.HISUI));
+	public static final Item SUSPICIOUS_BROOM = createItem("suspicious_broom", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.KOHAKU));
+
+
 	private static <T extends Item> T createItem(String name, T item) {
 		ITEMS.put(new Identifier(MODID, name), item);
 		return item;

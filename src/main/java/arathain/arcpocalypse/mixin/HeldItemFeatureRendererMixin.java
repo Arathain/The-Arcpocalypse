@@ -55,7 +55,7 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 			final float heightScale = ScaleUtils.getModelHeightScale(entity, 0.5f);
 			matrices.scale(1/widthScale, 1/heightScale, 1/widthScale);
 			matrices.translate(0, -0.6, 0);
-			((ModelHaver)rend).getArcModel().setArmAngle(arm, matrices);
+			((ModelHaver)rend).getArcModel(entity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()).setArmAngle(arm, matrices);
 			matrices.translate(0, 0.6, 0);
 			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90.0F));
 			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
