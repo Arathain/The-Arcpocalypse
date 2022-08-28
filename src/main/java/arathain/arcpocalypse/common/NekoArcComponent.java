@@ -44,13 +44,13 @@ public class NekoArcComponent implements AutoSyncedComponent {
 			width.setScale(1);
 			height.setScale(1);
 		}
-		if(shouldSync)
+		if (shouldSync)
 			obj.syncComponent(ArcpocalypseComponents.ARC_COMPONENT);
 	}
 
 	@Override
 	public void readFromNbt(NbtCompound tag) {
-		necoType = TypeNeco.getNecoFromString(tag.getString("neco"));
+		this.necoType = TypeNeco.getNecoFromString(tag.getString("neco"));
 		arc = tag.getBoolean("nekoarcueidbrunestud");
 		flying = tag.getBoolean("flying");
 	}
@@ -67,7 +67,9 @@ public class NekoArcComponent implements AutoSyncedComponent {
 	}
 
 	public void setNecoType(TypeNeco neco) {
-		necoType = neco;
+		boolean sync = (this.necoType != neco);
+		this.necoType = neco;
+		if (sync) obj.syncComponent(ArcpocalypseComponents.ARC_COMPONENT);
 	}
 
 	// Add Texture thingy in here

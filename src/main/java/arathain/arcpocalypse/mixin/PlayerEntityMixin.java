@@ -3,6 +3,7 @@ package arathain.arcpocalypse.mixin;
 import arathain.arcpocalypse.Arcpocalypse;
 import arathain.arcpocalypse.ArcpocalypseComponents;
 import arathain.arcpocalypse.common.ArcpocalypseSoundEvents;
+import arathain.arcpocalypse.common.NekoArcComponent;
 import com.sammy.ortus.systems.rendering.particle.Easing;
 import com.sammy.ortus.systems.rendering.particle.ParticleBuilders;
 import net.minecraft.block.*;
@@ -80,7 +81,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
 	@Override
 	public float getSoundPitch() {
-		return this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc() ? 1 : super.getSoundPitch();
+		if (this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
+			return (this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType() == NekoArcComponent.TypeNeco.ARC) ? 1 : 1.2f;
+		} else return super.getSoundPitch();
 	}
 	@Inject(method = "tick", at = @At("HEAD"))
 	public void neko$tick(CallbackInfo info) {

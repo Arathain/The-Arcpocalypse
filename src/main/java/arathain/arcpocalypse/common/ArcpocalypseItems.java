@@ -17,11 +17,11 @@ public class ArcpocalypseItems {
 	public static final Item ABYSS_LIFT = createItem("abyss_lift", new AbyssLiftItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC)));
 
 	// Neco transform items
-	public static final Item LUNAR_DIAMOND = createItem("lunar_diamond", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.ARC)); // RENAME TO SOMETHING MORE CLEVER
+	public static final Item FUNNY_MARBLE = createItem("funny_marble", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.ARC)); // RENAME TO SOMETHING MORE CLEVER
 	public static final Item NOT_A_CROSS = createItem("holy_math_symbol", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.CIEL));
-	public static final Item LUXURIOUS_EMBLEM = createItem("luxurious_emblem", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.AKIHA));
-	public static final Item ORDINARY_PAN = createItem("ordinary_pan", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.HISUI));
-	public static final Item SUSPICIOUS_BROOM = createItem("suspicious_broom", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.KOHAKU));
+	public static final Item CRIMSON_GEM = createItem("crimson_gem", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.AKIHA));
+	public static final Item HYPNOTIC_STOPWATCH = createItem("hypnotic_stopwatch", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.HISUI)); // Iron
+	public static final Item SUSPICIOUS_BROOM = createItem("suspicious_broom", new NecoItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.MISC), NekoArcComponent.TypeNeco.KOHAKU)); // HAY and Stick
 
 
 	private static <T extends Item> T createItem(String name, T item) {

@@ -23,7 +23,7 @@ import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionBehavior;
 
 public class NecoItem extends Item {
-	private final NekoArcComponent.TypeNeco neco;
+	public final NekoArcComponent.TypeNeco neco;
 
 	public NecoItem(Settings settings, NekoArcComponent.TypeNeco neco) {
 		super(settings);
@@ -32,19 +32,13 @@ public class NecoItem extends Item {
 
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		if (user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
+		/*if (user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setNecoType(neco);
 			//Explosion explosion = new Explosion(world, user, DamageSource.MAGIC, new ExplosionBehavior(), user.getX(), user.getY(), user.getZ(), 2, false, Explosion.DestructionType.NONE);
 			return TypedActionResult.success(user.getStackInHand(hand));
 		} else {
 			return super.use(world, user, hand);
-		}
-	}
-
-	public class NecoExplosionBehavior extends ExplosionBehavior {
-		@Override
-		public boolean canDestroyBlock(Explosion explosion, BlockView world, BlockPos pos, BlockState state, float power) {
-			return false;
-		}
+		}*/
+		return super.use(world, user, hand);
 	}
 }
