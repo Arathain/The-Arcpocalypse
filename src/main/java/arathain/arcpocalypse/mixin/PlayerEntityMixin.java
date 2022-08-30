@@ -69,34 +69,35 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	@Inject(method = "getDeathSound()Lnet/minecraft/sound/SoundEvent;", at = @At("HEAD"), cancellable = true)
 	private void neko$death(CallbackInfoReturnable<SoundEvent> cir) {
 		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
-			cir.setReturnValue(ArcpocalypseSoundEvents.ENTITY_ARC_DEATH);
+			cir.setReturnValue(ArcpocalypseSoundEvents.getNecoDeath(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()));
 		}
 	}
 	@Inject(method = "getHurtSound", at = @At("HEAD"), cancellable = true)
 	private void neko$hurt(CallbackInfoReturnable<SoundEvent> cir) {
 		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
-			cir.setReturnValue(ArcpocalypseSoundEvents.ENTITY_ARC_HURT);
+			cir.setReturnValue(ArcpocalypseSoundEvents.getNecoHurt(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()));
 		}
 	}
 
 	@Override
 	public float getSoundPitch() {
 		if (this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
-			return (this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType() == NekoArcComponent.TypeNeco.ARC) ? 1 : 1.2f;
+			return this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc() ? 1 : super.getSoundPitch();
 		} else return super.getSoundPitch();
 	}
 	@Inject(method = "tick", at = @At("HEAD"))
 	public void neko$tick(CallbackInfo info) {
 		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
+			NekoArcComponent.TypeNeco necoType = this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType();
 			if (this.isAlive() && this.random.nextInt(2000) < this.ambientSoundChance++) {
 				this.ambientSoundChance = -40;
-				this.playSound((this.getAttacking() != null || this.getAttacker() != null || this.lastAttackedTicks < 100) ? ArcpocalypseSoundEvents.ENTITY_ARC_TAUNT : ArcpocalypseSoundEvents.ENTITY_ARC_AMBIENT, this.getSoundVolume(), 1);
+				this.playSound((this.getAttacking() != null || this.getAttacker() != null || this.lastAttackedTicks < 100) ? ArcpocalypseSoundEvents.getNecoTaunt(necoType) : ArcpocalypseSoundEvents.getNecoAmbient(necoType), this.getSoundVolume(), 1);
 			}
 
 			if(this.isSneaking() && this.isSprinting()) {
 				Vec3d rotation = this.getRotationVector();
 				if(world.getTime() % 14 == 0) {
-					this.playSound(ArcpocalypseSoundEvents.ENTITY_ARC_BEAM, this.getSoundVolume(), 1);
+					this.playSound(ArcpocalypseSoundEvents.ENTITY_NECO_BEAM, this.getSoundVolume(), 1);
 				}
 				if(world.isClient) {
 					ParticleBuilders.WorldParticleBuilder builder;
@@ -134,10 +135,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 							Vec3d vec3d3 = this.getPos().relativize(living.getPos()).normalize();
 							vec3d3 = new Vec3d(vec3d3.x, 0.0, vec3d3.z);
 							if (vec3d3.dotProduct(vec3d2) < 0.0) {
-								living.getActiveItem().damage(4, this, (playerEntity) -> {
-									playerEntity.sendToolBreakStatus(living.getActiveHand());
-								});
-							} else {
 								hit.getEntity().setOnFireFor(4);
 								hit.getEntity().damage(DamageSource.ON_FIRE, 1);
 								hit.getEntity().timeUntilRegen = 0;

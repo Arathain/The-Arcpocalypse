@@ -76,9 +76,9 @@ public class NekoArcComponent implements AutoSyncedComponent {
 	public enum TypeNeco {
 		ARC("neko_arc", false),
 		CIEL("neco_ciel", false),
-		AKIHA("neco_akiha", false),
-		HISUI("neco_hisui", true),
-		KOHAKU("neco_kohaku", true);
+		AKIHA("neco_akiha",  false),
+		HISUI("neco_hisui",  true),
+		KOHAKU("neco_kohaku",  true);
 
 		public final String textureName;
 		public final boolean maidModel;

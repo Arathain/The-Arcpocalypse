@@ -1,7 +1,9 @@
 package arathain.arcpocalypse.client;
 
 import arathain.arcpocalypse.Arcpocalypse;
+import arathain.arcpocalypse.ArcpocalypseComponents;
 import arathain.arcpocalypse.common.AbyssLiftEntity;
+import arathain.arcpocalypse.common.NekoArcComponent;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
@@ -300,6 +302,12 @@ public class NekoArcModel extends BipedEntityModel<PlayerEntity> {
 			float p = 0.33333334F;
 			this.leftLeg.pitch = MathHelper.lerp(this.leaningPitch, this.leftLeg.pitch, 0.3F * MathHelper.cos(f * 0.33333334F + 3.1415927F));
 			this.rightLeg.pitch = MathHelper.lerp(this.leaningPitch, this.rightLeg.pitch, 0.3F * MathHelper.cos(f * 0.33333334F));
+		}
+
+		if (livingEntity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType().maidModel) {
+			this.rightLeg.pitch = MathHelper.clamp(rightLeg.pitch, -0.3f, 0.3f);
+			this.leftLeg.pitch = MathHelper.clamp(leftLeg.pitch, -0.3f, 0.3f);
+
 		}
 		this.tail.pivotY = 7.0f;
 		if(this.rightArmPose == ArmPose.ITEM || this.rightArmPose == ArmPose.EMPTY)
