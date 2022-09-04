@@ -35,10 +35,11 @@ public class NekoArcComponent implements AutoSyncedComponent {
 
 	public void setArc(boolean arc) {
 		boolean shouldSync = arc != this.arc;
+		boolean formerArcButMaybeItWorksProperlyPlease = this.arc;
 		this.arc = arc;
-		if(arc) {
+		if(arc && !formerArcButMaybeItWorksProperlyPlease) {
 			scaleDown(obj);
-		} else {
+		} else if (!arc) {
 			ScaleData width = NekoArcScaleType.MODIFY_WIDTH_TYPE.getScaleData(obj);
 			ScaleData height = NekoArcScaleType.MODIFY_HEIGHT_TYPE.getScaleData(obj);
 			width.setScale(1);
@@ -72,7 +73,6 @@ public class NekoArcComponent implements AutoSyncedComponent {
 		if (sync) obj.syncComponent(ArcpocalypseComponents.ARC_COMPONENT);
 	}
 
-	// Add Texture thingy in here
 	public enum TypeNeco {
 		ARC("neko_arc", false),
 		CIEL("neco_ciel", false),

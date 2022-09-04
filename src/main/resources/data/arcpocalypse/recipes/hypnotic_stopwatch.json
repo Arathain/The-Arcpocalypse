@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " BB",
+    " B ",
+    "EAE"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:echo_shard"
+    },
+    "A": {
+      "item": "minecraft:clock"
+    },
+    "B": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "arcpocalypse:hypnotic_stopwatch"
+  }
+}

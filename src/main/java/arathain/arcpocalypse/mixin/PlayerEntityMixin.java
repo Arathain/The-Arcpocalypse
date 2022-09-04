@@ -42,7 +42,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	private int ambientSoundChance;
 
 	@Shadow
-	protected abstract void damageShield(float amount);
+	public abstract void damageShield(float amount);
 
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -153,6 +153,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 				}
 			}
 			if (this.isFallFlying()) {
+				this.onLanding();
 				Vec3d rotation = this.getRotationVector();
 				Vec3d velocity = this.getVelocity();
 				float speed = (0.15F * (this.getPitch() < -75 && this.getPitch() > -105 ? 2.75F : 1F));

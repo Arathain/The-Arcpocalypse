@@ -76,7 +76,7 @@ public class AbyssLiftRenderer extends EntityRenderer<AbyssLiftEntity> {
 		float minV = 0.0F;
 		float maxV = MathHelper.sqrt(squaredLength) / 8F;
 		MatrixStack.Entry entry = stack.peek();
-		Matrix4f matrix4f = entry.getPosition();
+		Matrix4f matrix4f = entry.getModel();
 		Matrix3f matrix3f = entry.getNormal();
 
 		vertexConsumer.vertex(matrix4f, vertX1, vertY1, 0F).color(0, 0, 0, 255).uv(minU, minV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
@@ -89,7 +89,7 @@ public class AbyssLiftRenderer extends EntityRenderer<AbyssLiftEntity> {
 		stack.translate(-0.015, -0.2, 0);
 
 		entry = stack.peek();
-		matrix4f = entry.getPosition();
+		matrix4f = entry.getModel();
 		matrix3f = entry.getNormal();
 
 		vertexConsumer.vertex(matrix4f, vertX1, vertY1, 0F).color(0, 0, 0, 255).uv(minU, minV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();

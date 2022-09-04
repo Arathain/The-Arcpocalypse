@@ -1,5 +1,6 @@
 package arathain.arcpocalypse.common;
 
+import arathain.arcpocalypse.Arcpocalypse;
 import arathain.arcpocalypse.ArcpocalypseComponents;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -32,13 +33,18 @@ public class NecoItem extends Item {
 
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		/*if (user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
-			user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setNecoType(neco);
-			//Explosion explosion = new Explosion(world, user, DamageSource.MAGIC, new ExplosionBehavior(), user.getX(), user.getY(), user.getZ(), 2, false, Explosion.DestructionType.NONE);
-			return TypedActionResult.success(user.getStackInHand(hand));
+		if (Arcpocalypse.DOES_THE_ITEM_MAKE_YOU_TRANSFORM_ALSO_THIS_WILL_BE_IN_A_CONFIG_MAYBE) {
+			if (neco != user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()) {
+				user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setArc(true);
+				user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setNecoType(neco);
+				Explosion explosion = new Explosion(world, user, null, new ExplosionBehavior(), user.getX(), user.getY(), user.getZ(), 2, false, Explosion.DestructionType.NONE);
+				explosion.clearAffectedBlocks();
+				explosion.affectWorld(true);
+				user.getStackInHand(hand).decrement(1);
+				return TypedActionResult.success(user.getStackInHand(hand));
+			} else return super.use(world, user, hand);
 		} else {
 			return super.use(world, user, hand);
-		}*/
-		return super.use(world, user, hand);
+		}
 	}
 }

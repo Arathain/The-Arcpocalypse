@@ -4,6 +4,7 @@ import arathain.arcpocalypse.common.ArcpocalypseEntities;
 import arathain.arcpocalypse.common.ArcpocalypseItems;
 import arathain.arcpocalypse.common.ArcpocalypseSoundEvents;
 import arathain.arcpocalypse.common.NekoArcScaleType;
+import dev.emi.emi.EmiCommands;
 import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.block.Block;
@@ -14,6 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.Items;
+import net.minecraft.server.command.CommandManager;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -32,6 +34,7 @@ public class Arcpocalypse implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("Arcpocalypse");
 	public static final String MODID = "arcpocalypse";
 	public static final Color BURUNYUU_LASER = new Color(100, 10, 30);
+	public static final boolean DOES_THE_ITEM_MAKE_YOU_TRANSFORM_ALSO_THIS_WILL_BE_IN_A_CONFIG_MAYBE = false; // Decide if you want a config or if you want this to be devs only
 
 	@Override
 	public void onInitialize(ModContainer mod) {
@@ -40,6 +43,7 @@ public class Arcpocalypse implements ModInitializer {
 		ArcpocalypseItems.init();
 		ArcpocalypseSoundEvents.init();
 		EntityElytraEvents.CUSTOM.register((entity, tickElytra) -> entity instanceof PlayerEntity && entity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc());
+
 	}
 	public static EntityHitResult hitscanEntity(World world, LivingEntity user, double distance, Predicate<Entity> targetPredicate){
 		Vec3d vec3d = user.getCameraPosVec(1);
