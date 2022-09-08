@@ -1,5 +1,6 @@
 package arathain.arcpocalypse.common;
 
+import arathain.arcpocalypse.Arcpocalypse;
 import arathain.arcpocalypse.ArcpocalypseComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -162,8 +163,15 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 				if(this.getFirstPassenger() instanceof LivingEntity l) {
 					l.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 40, 0));
 					l.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 40, 0));
-					if(l instanceof PlayerEntity && random.nextFloat() > 0.98f && !l.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
-						l.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setArc(true);
+					if(l instanceof PlayerEntity && random.nextFloat() > 0.98f) {
+						if (!l.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
+							l.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setArc(true);
+						}
+
+						if (l.getMainHandStack().getItem() instanceof NecoItem necoItem) {
+							l.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setNecoType(necoItem.neco);
+							Arcpocalypse.LOGGER.info("OI");
+						}
 					} else if(l instanceof CatEntity) {
 						l.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 40, 0));
 					}

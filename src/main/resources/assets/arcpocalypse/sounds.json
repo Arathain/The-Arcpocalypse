@@ -1,44 +1,252 @@
 {
-  "entity.nekoarcplayer.idle": {
+  "entity.neco.arc.idle": {
     "sounds": [
-      "arcpocalypse:idle_1",
-      "arcpocalypse:idle_2",
-      "arcpocalypse:idle_3"
+      "arcpocalypse:arc/idle_1",
+      "arcpocalypse:arc/idle_2",
+      "arcpocalypse:arc/idle_3",
+      "arcpocalypse:arc/idle_4",
+      "arcpocalypse:arc/idle_5",
+      "arcpocalypse:arc/idle_6",
+      "arcpocalypse:arc/idle_7",
+      "arcpocalypse:arc/idle_8",
+      "arcpocalypse:arc/idle_9",
+      "arcpocalypse:arc/idle_10",
+      "arcpocalypse:arc/idle_11"
     ],
-    "subtitle": "arcpocalypse.subtitles.entity.nekoarc.idle"
+    "subtitle": "arcpocalypse.subtitles.entity.neco_arc.idle"
   },
-  "entity.nekoarcplayer.taunt": {
+  "entity.neco.arc.taunt": {
     "sounds": [
-      "arcpocalypse:taunt_1",
-      "arcpocalypse:taunt_2",
-      "arcpocalypse:taunt_3"
+      "arcpocalypse:arc/taunt_1",
+      "arcpocalypse:arc/taunt_2",
+      "arcpocalypse:arc/taunt_3",
+      "arcpocalypse:arc/taunt_4",
+      "arcpocalypse:arc/taunt_5",
+      "arcpocalypse:arc/taunt_6",
+      "arcpocalypse:arc/taunt_7",
+      "arcpocalypse:arc/taunt_8",
+      "arcpocalypse:arc/taunt_9",
+      "arcpocalypse:arc/taunt_10"
     ],
-    "subtitle": "arcpocalypse.subtitles.entity.nekoarc.attack"
+    "subtitle": "arcpocalypse.subtitles.entity.neco_arc.attack"
   },
-  "entity.nekoarcplayer.hurt": {
+  "entity.neco.arc.hurt": {
     "sounds": [
-      "arcpocalypse:hurt_1",
-      "arcpocalypse:hurt_2",
-      "arcpocalypse:hurt_3",
-      "arcpocalypse:hurt_4",
-      "arcpocalypse:hurt_5",
-      "arcpocalypse:hurt_6",
-      "arcpocalypse:hurt_7",
-      "arcpocalypse:hurt_8",
-      "arcpocalypse:hurt_9"
+      "arcpocalypse:arc/hurt_1",
+      "arcpocalypse:arc/hurt_2",
+      "arcpocalypse:arc/hurt_3",
+      "arcpocalypse:arc/hurt_4",
+      "arcpocalypse:arc/hurt_5",
+      "arcpocalypse:arc/hurt_6",
+      "arcpocalypse:arc/hurt_7"
     ],
-    "subtitle": "arcpocalypse.subtitles.entity.nekoarc.hurt"
+    "subtitle": "arcpocalypse.subtitles.entity.neco_arc.hurt"
   },
-  "entity.nekoarcplayer.death": {
+  "entity.neco.arc.death": {
     "sounds": [
-      "arcpocalypse:death_1"
+      "arcpocalypse:arc/death_1"
     ],
-    "subtitle": "arcpocalypse.subtitles.entity.nekoarc.death"
+    "subtitle": "arcpocalypse.subtitles.entity.neco_arc.death"
   },
-  "entity.nekoarcplayer.beam": {
+  "entity.neco.ciel.idle": {
+    "sounds": [
+      "arcpocalypse:ciel/idle_1",
+      "arcpocalypse:ciel/idle_2",
+      "arcpocalypse:ciel/idle_3",
+      "arcpocalypse:ciel/idle_4",
+      "arcpocalypse:ciel/idle_5",
+      "arcpocalypse:ciel/idle_6",
+      "arcpocalypse:ciel/idle_7",
+      "arcpocalypse:ciel/idle_8",
+      "arcpocalypse:ciel/idle_9",
+      "arcpocalypse:ciel/idle_10"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_ciel.idle"
+  },
+  "entity.neco.ciel.taunt": {
+    "sounds": [
+      "arcpocalypse:ciel/taunt_1",
+      "arcpocalypse:ciel/taunt_2",
+      "arcpocalypse:ciel/taunt_3",
+      "arcpocalypse:ciel/taunt_4",
+      "arcpocalypse:ciel/taunt_5",
+      "arcpocalypse:ciel/taunt_6",
+      "arcpocalypse:ciel/taunt_7",
+      "arcpocalypse:ciel/taunt_8",
+      "arcpocalypse:ciel/taunt_9",
+      "arcpocalypse:ciel/taunt_10"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_ciel.attack"
+  },
+  "entity.neco.ciel.hurt": {
+    "sounds": [
+      "arcpocalypse:ciel/hurt_1",
+      "arcpocalypse:ciel/hurt_2",
+      "arcpocalypse:ciel/hurt_3",
+      "arcpocalypse:ciel/hurt_4",
+      "arcpocalypse:ciel/hurt_5",
+      "arcpocalypse:ciel/hurt_6",
+      "arcpocalypse:ciel/hurt_7"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_ciel.hurt"
+  },
+  "entity.neco.ciel.death": {
+    "sounds": [
+      "arcpocalypse:ciel/death_1"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_ciel.death"
+  },
+  "entity.neco.akiha.idle": {
+    "sounds": [
+      "arcpocalypse:akiha/idle_1",
+      "arcpocalypse:akiha/idle_2",
+      "arcpocalypse:akiha/idle_3",
+      "arcpocalypse:akiha/idle_4",
+      "arcpocalypse:akiha/idle_5",
+      "arcpocalypse:akiha/idle_6",
+      "arcpocalypse:akiha/idle_7",
+      "arcpocalypse:akiha/idle_8",
+      "arcpocalypse:akiha/idle_9",
+      "arcpocalypse:akiha/idle_10",
+      "arcpocalypse:akiha/idle_11"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_akiha.idle"
+  },
+  "entity.neco.akiha.taunt": {
+    "sounds": [
+      "arcpocalypse:akiha/taunt_1",
+      "arcpocalypse:akiha/taunt_2",
+      "arcpocalypse:akiha/taunt_3",
+      "arcpocalypse:akiha/taunt_4",
+      "arcpocalypse:akiha/taunt_5",
+      "arcpocalypse:akiha/taunt_6",
+      "arcpocalypse:akiha/taunt_7",
+      "arcpocalypse:akiha/taunt_8",
+      "arcpocalypse:akiha/taunt_9",
+      "arcpocalypse:akiha/taunt_10"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_akiha.attack"
+  },
+  "entity.neco.akiha.hurt": {
+    "sounds": [
+      "arcpocalypse:akiha/hurt_1",
+      "arcpocalypse:akiha/hurt_2",
+      "arcpocalypse:akiha/hurt_3",
+      "arcpocalypse:akiha/hurt_4",
+      "arcpocalypse:akiha/hurt_5",
+      "arcpocalypse:akiha/hurt_6",
+      "arcpocalypse:akiha/hurt_7"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_akiha.hurt"
+  },
+  "entity.neco.akiha.death": {
+    "sounds": [
+      "arcpocalypse:akiha/death_1"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_akiha.death"
+  },
+  "entity.neco.hisui.idle": {
+    "sounds": [
+      "arcpocalypse:hisui/idle_1",
+      "arcpocalypse:hisui/idle_2",
+      "arcpocalypse:hisui/idle_3",
+      "arcpocalypse:hisui/idle_4",
+      "arcpocalypse:hisui/idle_5",
+      "arcpocalypse:hisui/idle_6",
+      "arcpocalypse:hisui/idle_7",
+      "arcpocalypse:hisui/idle_8",
+      "arcpocalypse:hisui/idle_9",
+      "arcpocalypse:hisui/idle_10",
+      "arcpocalypse:hisui/idle_11"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_hisui.idle"
+  },
+  "entity.neco.hisui.taunt": {
+    "sounds": [
+      "arcpocalypse:hisui/taunt_1",
+      "arcpocalypse:hisui/taunt_2",
+      "arcpocalypse:hisui/taunt_3",
+      "arcpocalypse:hisui/taunt_4",
+      "arcpocalypse:hisui/taunt_5",
+      "arcpocalypse:hisui/taunt_6",
+      "arcpocalypse:hisui/taunt_7",
+      "arcpocalypse:hisui/taunt_8",
+      "arcpocalypse:hisui/taunt_9",
+      "arcpocalypse:hisui/taunt_10"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_hisui.attack"
+  },
+  "entity.neco.hisui.hurt": {
+    "sounds": [
+      "arcpocalypse:hisui/hurt_1",
+      "arcpocalypse:hisui/hurt_2",
+      "arcpocalypse:hisui/hurt_3",
+      "arcpocalypse:hisui/hurt_4",
+      "arcpocalypse:hisui/hurt_5",
+      "arcpocalypse:hisui/hurt_6",
+      "arcpocalypse:hisui/hurt_7"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_hisui.hurt"
+  },
+  "entity.neco.hisui.death": {
+    "sounds": [
+      "arcpocalypse:hisui/death_1"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_hisui.death"
+  },
+  "entity.neco.kohaku.idle": {
+    "sounds": [
+      "arcpocalypse:kohaku/idle_1",
+      "arcpocalypse:kohaku/idle_2",
+      "arcpocalypse:kohaku/idle_3",
+      "arcpocalypse:kohaku/idle_4",
+      "arcpocalypse:kohaku/idle_5",
+      "arcpocalypse:kohaku/idle_6",
+      "arcpocalypse:kohaku/idle_7",
+      "arcpocalypse:kohaku/idle_8",
+      "arcpocalypse:kohaku/idle_9",
+      "arcpocalypse:kohaku/idle_10",
+      "arcpocalypse:kohaku/idle_11"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_kohaku.idle"
+  },
+  "entity.neco.kohaku.taunt": {
+    "sounds": [
+      "arcpocalypse:kohaku/taunt_1",
+      "arcpocalypse:kohaku/taunt_2",
+      "arcpocalypse:kohaku/taunt_3",
+      "arcpocalypse:kohaku/taunt_4",
+      "arcpocalypse:kohaku/taunt_5",
+      "arcpocalypse:kohaku/taunt_6",
+      "arcpocalypse:kohaku/taunt_7",
+      "arcpocalypse:kohaku/taunt_8",
+      "arcpocalypse:kohaku/taunt_9",
+      "arcpocalypse:kohaku/taunt_10"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_kohaku.attack"
+  },
+  "entity.neco.kohaku.hurt": {
+    "sounds": [
+      "arcpocalypse:kohaku/hurt_1",
+      "arcpocalypse:kohaku/hurt_2",
+      "arcpocalypse:kohaku/hurt_3",
+      "arcpocalypse:kohaku/hurt_4",
+      "arcpocalypse:kohaku/hurt_5",
+      "arcpocalypse:kohaku/hurt_6",
+      "arcpocalypse:kohaku/hurt_7"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_kohaku.hurt"
+  },
+  "entity.neco.kohaku.death": {
+    "sounds": [
+      "arcpocalypse:kohaku/death_1"
+    ],
+    "subtitle": "arcpocalypse.subtitles.entity.neco_kohaku.death"
+  },
+  "entity.neco.all.beam": {
     "sounds": [
       "arcpocalypse:beam"
     ],
-    "subtitle": "arcpocalypse.subtitles.entity.nekoarc.beam"
+    "subtitle": "arcpocalypse.subtitles.entity.neco.beam"
   }
 }

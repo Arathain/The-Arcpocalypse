@@ -19,10 +19,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
 import net.minecraft.util.math.Vec3f;
-import org.checkerframework.common.aliasing.qual.Unique;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -52,7 +52,7 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 		if(entity instanceof PlayerEntity && entity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc() && ctx instanceof PlayerEntityRenderer rend) {
 			matrices.push();
 			matrices.translate(0, -0.6, 0);
-			((ModelHaver)rend).getArcModel().setArmAngle(arm, matrices);
+			((ModelHaver)rend).getArcModel(entity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()).setArmAngle(arm, matrices);
 			matrices.translate(0, 0.6, 0);
 			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90.0F));
 			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));

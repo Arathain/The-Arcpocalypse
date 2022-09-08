@@ -1,6 +1,7 @@
 package arathain.arcpocalypse.mixin;
 
 import arathain.arcpocalypse.ArcpocalypseComponents;
+import arathain.arcpocalypse.common.NekoArcComponent;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,6 +27,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc() && !this.getWorld().getGameRules().get(GameRules.KEEP_INVENTORY).get()) {
 			System.out.println("yeah");
 			this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setArc(false);
+			this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setNecoType(NekoArcComponent.TypeNeco.ARC);
 		}
 	}
 }

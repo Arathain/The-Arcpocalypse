@@ -5,6 +5,7 @@ import arathain.arcpocalypse.ArcpocalypseClient;
 import arathain.arcpocalypse.ArcpocalypseComponents;
 import arathain.arcpocalypse.client.ModelHaver;
 import arathain.arcpocalypse.client.NekoArcModel;
+import arathain.arcpocalypse.common.NekoArcComponent;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
@@ -43,19 +44,26 @@ import java.util.Iterator;
 
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> implements ModelHaver {
+	//@Unique
+	//private static final Identifier TEXTURE = new Identifier(Arcpocalypse.MODID, "textures/entity/neco_ciel.png");
 	@Unique
-	private static final Identifier TEXTURE = new Identifier(Arcpocalypse.MODID, "textures/entity/neko_arc.png");
-	@Unique
-
 	private NekoArcModel MODEL;
+
+	@Unique
+	private NekoArcModel MAID_MODEL;
+
 
 	public PlayerEntityRendererMixin(EntityRendererFactory.Context context, PlayerEntityModel<AbstractClientPlayerEntity> entityModel, float f) {
 		super(context, entityModel, f);
 	}
 
+	public Identifier getTexture(NekoArcComponent.TypeNeco neco) {
+		return new Identifier(Arcpocalypse.MODID, "textures/entity/" + neco.textureName + ".png");
+	}
+
 	@Override
-	public NekoArcModel getArcModel() {
-		return MODEL;
+	public NekoArcModel getArcModel(NekoArcComponent.TypeNeco neco) {
+		return (neco.maidModel) ? MAID_MODEL : MODEL;
 	}
 
 	@Shadow
@@ -69,11 +77,12 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void neko$init(EntityRendererFactory.Context context, boolean bl, CallbackInfo ci) {
 		MODEL = new NekoArcModel(context.getPart(ArcpocalypseClient.ARC_MODEL_LAYER));
+		MAID_MODEL = new NekoArcModel(context.getPart(ArcpocalypseClient.MAIDEN_ARC_MODEL_LAYER));
 	}
 	@Inject(method = "renderArm", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/PlayerEntityModel;setAngles(Lnet/minecraft/entity/LivingEntity;FFFFF)V", shift = At.Shift.AFTER), cancellable = true)
 	private void neko$renderArm(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, ModelPart arm, ModelPart sleeve, CallbackInfo ci) {
-		if(player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
-			NekoArcModel playerEntityModel = this.MODEL;
+		if (player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
+			NekoArcModel playerEntityModel = (player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType().maidModel) ? this.MAID_MODEL : this.MODEL;
 			arm = arm == this.model.rightArm ? playerEntityModel.rightArm : playerEntityModel.leftArm;
 			BipedEntityModel.ArmPose armPose = getArmPose(player, Hand.MAIN_HAND);
 			BipedEntityModel.ArmPose armPose2 = getArmPose(player, Hand.OFF_HAND);
@@ -95,7 +104,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			playerEntityModel.rightArm.roll -= 0.533;
 			playerEntityModel.leftArm.roll += 0.533;
 			matrices.scale(1.5F, 1.5F, 1.5F);
-			arm.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURE)), light, OverlayTexture.DEFAULT_UV);
+			arm.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(getTexture(player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()))), light, OverlayTexture.DEFAULT_UV);
 			ci.cancel();
 		}
 	}
@@ -105,27 +114,28 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 		if(player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			BipedEntityModel.ArmPose armPose = getArmPose(player, Hand.MAIN_HAND);
 			BipedEntityModel.ArmPose armPose2 = getArmPose(player, Hand.OFF_HAND);
+			NekoArcModel playerEntityModel = (player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType().maidModel) ? this.MAID_MODEL : this.MODEL;
+
 			if (armPose.isTwoHanded()) {
 				armPose2 = player.getOffHandStack().isEmpty() ? BipedEntityModel.ArmPose.EMPTY : BipedEntityModel.ArmPose.ITEM;
 			}
 
 			if (player.getMainArm() == Arm.RIGHT) {
-				this.MODEL.rightArmPose = armPose;
-				this.MODEL.leftArmPose = armPose2;
+				playerEntityModel.rightArmPose = armPose;
+				playerEntityModel.leftArmPose = armPose2;
 			} else {
-				this.MODEL.rightArmPose = armPose2;
-				this.MODEL.leftArmPose = armPose;
+				playerEntityModel.rightArmPose = armPose2;
+				playerEntityModel.leftArmPose = armPose;
 			}
 			matrixStack.push();
-			this.MODEL.handSwingProgress = this.getHandSwingProgress(player, tickDelta);
-			this.MODEL.riding = player.hasVehicle();
-			this.MODEL.child = player.isBaby();
+			playerEntityModel.handSwingProgress = this.getHandSwingProgress(player, tickDelta);
+			playerEntityModel.riding = player.hasVehicle();
+			playerEntityModel.child = player.isBaby();
 			float h = MathHelper.lerpAngleDegrees(tickDelta, player.prevBodyYaw, player.bodyYaw);
 			float j = MathHelper.lerpAngleDegrees(tickDelta, player.prevHeadYaw, player.headYaw);
 			float k = j - h;
 			float l;
-			if (player.hasVehicle() && player.getVehicle() instanceof LivingEntity) {
-				LivingEntity livingEntity2 = (LivingEntity)player.getVehicle();
+			if (player.hasVehicle() && player.getVehicle() instanceof LivingEntity livingEntity2) {
 				h = MathHelper.lerpAngleDegrees(tickDelta, livingEntity2.prevBodyYaw, livingEntity2.bodyYaw);
 				k = j - h;
 				l = MathHelper.wrapDegrees(k);
@@ -179,22 +189,22 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 				}
 			}
 
-			this.MODEL.animateModel(player, o, n, tickDelta);
-			this.MODEL.setAngles(player, o, n, l, k, m);
+			playerEntityModel.animateModel(player, o, n, tickDelta);
+			playerEntityModel.setAngles(player, o, n, l, k, m);
 			MinecraftClient minecraftClient = MinecraftClient.getInstance();
 			boolean bl = this.isVisible(player);
 			boolean bl2 = !bl && !player.isInvisibleTo(minecraftClient.player);
-			RenderLayer renderLayer = RenderLayer.getEntityTranslucent(TEXTURE);
+			RenderLayer renderLayer = RenderLayer.getEntityTranslucent(getTexture(player.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()));
 			if (renderLayer != null) {
 				VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(renderLayer);
 				int p = getOverlay(player, this.getAnimationCounter(player, tickDelta));
-				if((!this.MODEL.eyes.visible && player.getRandom().nextFloat() > 0.90f) && !player.isSleeping() || player.isSneaking()) {
-					this.MODEL.eyes.visible = true;
+				if((!playerEntityModel.eyes.visible && player.getRandom().nextFloat() > 0.90f) && !player.isSleeping() || player.isSneaking()) {
+					playerEntityModel.eyes.visible = true;
 				}
-				if(((player.getRandom().nextFloat() > 0.997f && this.MODEL.eyes.visible) || player.isSleeping()) && !player.isSneaking()) {
-					this.MODEL.eyes.visible = false;
+				if(((player.getRandom().nextFloat() > 0.997f && playerEntityModel.eyes.visible) || player.isSleeping()) && !player.isSneaking()) {
+					playerEntityModel.eyes.visible = false;
 				}
-				this.MODEL.render(matrixStack, vertexConsumer, light, p, 1.0F, 1.0F, 1.0F, bl2 ? 0.15F : 1.0F);
+				playerEntityModel.render(matrixStack, vertexConsumer, light, p, 1.0F, 1.0F, 1.0F, bl2 ? 0.15F : 1.0F);
 			}
 			if (!player.isSpectator()) {
 				Iterator var23 = this.features.iterator();
