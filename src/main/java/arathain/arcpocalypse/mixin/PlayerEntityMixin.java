@@ -7,6 +7,8 @@ import arathain.arcpocalypse.common.NekoArcComponent;
 import com.sammy.ortus.systems.rendering.particle.Easing;
 import com.sammy.ortus.systems.rendering.particle.ParticleBuilders;
 import net.minecraft.block.*;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -47,6 +49,17 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
+	@Inject(method = "getActiveEyeHeight", at = @At("HEAD"), cancellable = true)
+	private void necoEyes(EntityPose pose, EntityDimensions dimensions, CallbackInfoReturnable<Float> cir) {
+		try {
+			if (ArcpocalypseComponents.ARC_COMPONENT != null && this.getComponent(ArcpocalypseComponents.ARC_COMPONENT) != null && this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
+				cir.setReturnValue(dimensions.height - 0.3f);
+			}
+		} catch(Throwable ignored) {
+
+		}
+	}
+
 	@Unique
 	private void neko$burn(PlayerEntity playerEntity, BlockPos blockPos, Direction side) {
 		if(playerEntity instanceof ServerPlayerEntity sr && !sr.interactionManager.getGameMode().isBlockBreakingRestricted()) {

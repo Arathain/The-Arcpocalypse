@@ -170,7 +170,7 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 
 						if (l.getMainHandStack().getItem() instanceof NecoItem necoItem) {
 							l.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setNecoType(necoItem.neco);
-							Arcpocalypse.LOGGER.info("OI");
+							Arcpocalypse.LOGGER.info(necoItem.neco.name());
 						}
 					} else if(l instanceof CatEntity) {
 						l.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 40, 0));
