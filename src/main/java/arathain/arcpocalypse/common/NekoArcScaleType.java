@@ -18,7 +18,7 @@ public class NekoArcScaleType {
 	}
 
 	public static void init() {
-		ScaleTypes.WIDTH.getDefaultBaseValueModifiers().add(MODIFY_WIDTH_MODIFIER);
-		ScaleTypes.HEIGHT.getDefaultBaseValueModifiers().add(MODIFY_HEIGHT_MODIFIER);
+		ScaleTypes.HITBOX_WIDTH.getDefaultBaseValueModifiers().add(MODIFY_WIDTH_MODIFIER);
+		ScaleTypes.HITBOX_HEIGHT.getDefaultBaseValueModifiers().add(MODIFY_HEIGHT_MODIFIER);
 	}
 }

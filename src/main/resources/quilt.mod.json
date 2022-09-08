@@ -29,7 +29,7 @@
 			},
 			{
 				"id": "lodestone",
-				"versions": "=438baa98b7"
+				"versions": "=64238b9afc"
 			},
 			{
 				"id": "quilted_fabric_api",
@@ -38,6 +38,10 @@
 			{
 				"id": "minecraft",
 				"versions": ">=1.19.2"
+			},
+			{
+				"id": "pehkui",
+				"versions": ">=3.4.0"
 			}
 		]
 	},

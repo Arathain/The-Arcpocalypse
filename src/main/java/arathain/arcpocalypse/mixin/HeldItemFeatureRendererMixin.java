@@ -51,16 +51,13 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 	private void neko$modelHijackery(LivingEntity entity, ItemStack stack, ModelTransformation.Mode transformationMode, Arm arm, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
 		if(entity instanceof PlayerEntity && entity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc() && ctx instanceof PlayerEntityRenderer rend) {
 			matrices.push();
-			final float widthScale = ScaleUtils.getModelWidthScale(entity, 0.5f);
-			final float heightScale = ScaleUtils.getModelHeightScale(entity, 0.5f);
-			matrices.scale(1/widthScale, 1/heightScale, 1/widthScale);
 			matrices.translate(0, -0.6, 0);
 			((ModelHaver)rend).getArcModel().setArmAngle(arm, matrices);
 			matrices.translate(0, 0.6, 0);
 			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90.0F));
 			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
 			boolean bl = arm == Arm.LEFT;
-			matrices.translate((double)((float)(bl ? -4 : 4) / 16.0F), 0.125, 0);
+			matrices.translate((double)((float)(bl ? -8 : 8) / 16.0F), 0.425, 0.25);
 			this.heldItemRenderer.renderItem(entity, stack, transformationMode, bl, matrices, vertexConsumers, light);
 			matrices.pop();
 			ci.cancel();
