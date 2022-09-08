@@ -171,9 +171,6 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			}
 
 			l = this.getAnimationProgress(player, tickDelta);
-			final float widthScale = ScaleUtils.getModelWidthScale(player, tickDelta);
-			final float heightScale = ScaleUtils.getModelHeightScale(player, tickDelta);
-			matrixStack.scale(1/widthScale, 1/heightScale, 1/widthScale);
 			this.setupTransforms(player, matrixStack, l, h, tickDelta);
 			matrixStack.scale(-1.0F, -1.0F, 1.0F);
 			this.scale(player, matrixStack, tickDelta);
@@ -208,7 +205,6 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 					playerEntityModel.eyes.visible = false;
 				}
 				playerEntityModel.render(matrixStack, vertexConsumer, light, p, 1.0F, 1.0F, 1.0F, bl2 ? 0.15F : 1.0F);
-				matrixStack.scale(widthScale, heightScale, widthScale);
 			}
 			if (!player.isSpectator()) {
 				Iterator var23 = this.features.iterator();

@@ -29,8 +29,8 @@ dependencies {
 		addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings_version}:v2"))
 	})
 	modImplementation "org.quiltmc:quilt-loader:${project.quilt_loader_version}"
-	modImplementation "com.github.Arathain:LodestoneLib-Quilt:438baa98b7"
-	include "com.github.Arathain:LodestoneLib-Quilt:438baa98b7"
+	modImplementation "com.github.Arathain:LodestoneLib-Quilt:64238b9afc"
+	include "com.github.Arathain:LodestoneLib-Quilt:64238b9afc"
 	modApi("com.github.Virtuoel:Pehkui:${project.pehkui_version}", {
 		exclude group: "net.fabricmc.fabric-api"
 	})
