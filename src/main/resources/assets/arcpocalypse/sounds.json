@@ -28,7 +28,7 @@
       "arcpocalypse:arc/taunt_9",
       "arcpocalypse:arc/taunt_10"
     ],
-    "subtitle": "arcpocalypse.subtitles.entity.neco_arc.attack"
+    "subtitle": "arcpocalypse.subtitles.entity.neco_arc.taunt"
   },
   "entity.neco.arc.hurt": {
     "sounds": [
@@ -76,7 +76,7 @@
       "arcpocalypse:ciel/taunt_9",
       "arcpocalypse:ciel/taunt_10"
     ],
-    "subtitle": "arcpocalypse.subtitles.entity.neco_ciel.attack"
+    "subtitle": "arcpocalypse.subtitles.entity.neco_ciel.taunt"
   },
   "entity.neco.ciel.hurt": {
     "sounds": [
@@ -125,7 +125,7 @@
       "arcpocalypse:akiha/taunt_9",
       "arcpocalypse:akiha/taunt_10"
     ],
-    "subtitle": "arcpocalypse.subtitles.entity.neco_akiha.attack"
+    "subtitle": "arcpocalypse.subtitles.entity.neco_akiha.taunt"
   },
   "entity.neco.akiha.hurt": {
     "sounds": [
@@ -174,7 +174,7 @@
       "arcpocalypse:hisui/taunt_9",
       "arcpocalypse:hisui/taunt_10"
     ],
-    "subtitle": "arcpocalypse.subtitles.entity.neco_hisui.attack"
+    "subtitle": "arcpocalypse.subtitles.entity.neco_hisui.taunt"
   },
   "entity.neco.hisui.hurt": {
     "sounds": [
@@ -223,7 +223,7 @@
       "arcpocalypse:kohaku/taunt_9",
       "arcpocalypse:kohaku/taunt_10"
     ],
-    "subtitle": "arcpocalypse.subtitles.entity.neco_kohaku.attack"
+    "subtitle": "arcpocalypse.subtitles.entity.neco_kohaku.taunt"
   },
   "entity.neco.kohaku.hurt": {
     "sounds": [
