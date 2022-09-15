@@ -1,9 +1,6 @@
 package arathain.arcpocalypse;
 
-import arathain.arcpocalypse.common.ArcpocalypseEntities;
-import arathain.arcpocalypse.common.ArcpocalypseItems;
-import arathain.arcpocalypse.common.ArcpocalypseSoundEvents;
-import arathain.arcpocalypse.common.NekoArcScaleType;
+import arathain.arcpocalypse.common.*;
 import dev.emi.emi.EmiCommands;
 import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
@@ -24,6 +21,7 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import org.quiltmc.qsl.command.api.CommandRegistrationCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +40,8 @@ public class Arcpocalypse implements ModInitializer {
 		ArcpocalypseEntities.init();
 		ArcpocalypseItems.init();
 		ArcpocalypseSoundEvents.init();
+		CommandRegistrationCallback.EVENT.register(((dispatcher, buildContext, environment) -> Necommand.registerNeco(dispatcher)));
+		CommandRegistrationCallback.EVENT.register(((dispatcher, buildContext, environment) -> Necommand.registerUnneco(dispatcher)));
 		EntityElytraEvents.CUSTOM.register((entity, tickElytra) -> entity instanceof PlayerEntity && entity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc());
 
 	}

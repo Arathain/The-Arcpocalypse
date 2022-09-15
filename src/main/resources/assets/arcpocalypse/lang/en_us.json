@@ -1,5 +1,9 @@
 {
   "entity.arcpocalypse.abyss_lift": "Abyss Lift",
+  "commands.neco.success.single": "Ascended %s",
+  "commands.neco.success.multiple": "Ascended %s entities.",
+  "commands.deneco.success.single": "Reverted %s",
+  "commands.deneco.success.multiple": "Reverted %s players.",
   "item.arcpocalypse.abyss_lift": "Abyss Lift",
   "item.arcpocalypse.holy_math_symbol": "Holy Math Symbol",
   "item.arcpocalypse.suspicious_broom": "Suspicious Broom",

@@ -13,6 +13,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.command.KillCommand;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -102,7 +103,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	public void neko$tick(CallbackInfo info) {
 		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			NekoArcComponent.TypeNeco necoType = this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType();
-			if (this.isAlive() && this.random.nextInt(2000) < this.ambientSoundChance++) {
+			if (this.isAlive() && this.random.nextInt(4000) < this.ambientSoundChance++) {
 				this.ambientSoundChance = -40;
 				this.playSound((this.getAttacking() != null || this.getAttacker() != null || this.lastAttackedTicks < 100) ? ArcpocalypseSoundEvents.getNecoTaunt(necoType) : ArcpocalypseSoundEvents.getNecoAmbient(necoType), this.getSoundVolume(), 1);
 			}
