@@ -11,6 +11,7 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.FlintAndSteelItem;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.util.TypedActionResult;
@@ -43,7 +44,14 @@ public class Arcpocalypse implements ModInitializer {
 		CommandRegistrationCallback.EVENT.register(((dispatcher, buildContext, environment) -> Necommand.registerNeco(dispatcher)));
 		CommandRegistrationCallback.EVENT.register(((dispatcher, buildContext, environment) -> Necommand.registerUnneco(dispatcher)));
 		EntityElytraEvents.CUSTOM.register((entity, tickElytra) -> entity instanceof PlayerEntity && entity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc());
-		//ItemGroupEvents.
+		ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS_AND_UTILITIES).register(content -> {
+			content.addItem(ArcpocalypseItems.ABYSS_LIFT);
+			content.addItem(ArcpocalypseItems.FUNNY_MARBLE);
+			content.addItem(ArcpocalypseItems.NOT_A_CROSS);
+			content.addItem(ArcpocalypseItems.CRIMSON_GEM);
+			content.addItem(ArcpocalypseItems.HYPNOTIC_STOPWATCH);
+			content.addItem(ArcpocalypseItems.SUSPICIOUS_BROOM);
+		});
 	}
 	public static EntityHitResult hitscanEntity(World world, LivingEntity user, double distance, Predicate<Entity> targetPredicate){
 		Vec3d vec3d = user.getCameraPosVec(1);

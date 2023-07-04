@@ -32,10 +32,10 @@ public abstract class EntityMixin {
 	@Inject(method = "isInvulnerableTo", at = @At(value = "RETURN"), cancellable = true)
 	private void neko$lumiarc(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
 		if(((Entity)(Object)this) instanceof ServerPlayerEntity plr && plr.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
-			if (damageSource.isTypeIn(DamageTypeTags.IS_EXPLOSION) && damageSource.isType(DamageTypes.MAGIC) && damageSource.getAttacker() != null && damageSource.getAttacker().getUuid().equals(this.getUuid())) {
+			if (damageSource.isTypeIn(DamageTypeTags.IS_EXPLOSION) && damageSource.getAttacker() != null && damageSource.getAttacker().getUuid().equals(this.getUuid())) {
 				cir.setReturnValue(true);
 			} else if (damageSource.isType(DamageTypes.FLY_INTO_WALL)) cir.setReturnValue(true);
-			//else if (damageSource.isFromFalling()) cir.setReturnValue(true);
+			else if (damageSource.isType(DamageTypes.FALL) && plr.isFallFlying()) cir.setReturnValue(true);
 			else cir.setReturnValue(cir.getReturnValue());
 		}
 	}

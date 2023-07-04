@@ -24,6 +24,9 @@ public class ArcpocalypseItems {
 	public static final Item HYPNOTIC_STOPWATCH = createItem("hypnotic_stopwatch", new NecoItem(new QuiltItemSettings().maxCount(1), NekoArcComponent.TypeNeco.HISUI)); // Iron
 	public static final Item SUSPICIOUS_BROOM = createItem("suspicious_broom", new NecoItem(new QuiltItemSettings().maxCount(1), NekoArcComponent.TypeNeco.KOHAKU)); // HAY and Stick
 
+	// Neco gacha items
+	// public static final Item PHONE = createItem("phone", new PhoneItem(new QuiltItemSettings().maxCount(1));
+	// public static final Item SAINT_QUARTZ = createItem("saint_quartz", new Item(new QuiltItemSettings()))
 
 	private static <T extends Item> T createItem(String name, T item) {
 		ITEMS.put(new Identifier(MODID, name), item);
