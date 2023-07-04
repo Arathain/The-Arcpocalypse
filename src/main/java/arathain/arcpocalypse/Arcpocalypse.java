@@ -1,9 +1,9 @@
 package arathain.arcpocalypse;
 
 import arathain.arcpocalypse.common.*;
-import dev.emi.emi.EmiCommands;
 import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -43,7 +43,7 @@ public class Arcpocalypse implements ModInitializer {
 		CommandRegistrationCallback.EVENT.register(((dispatcher, buildContext, environment) -> Necommand.registerNeco(dispatcher)));
 		CommandRegistrationCallback.EVENT.register(((dispatcher, buildContext, environment) -> Necommand.registerUnneco(dispatcher)));
 		EntityElytraEvents.CUSTOM.register((entity, tickElytra) -> entity instanceof PlayerEntity && entity.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc());
-
+		//ItemGroupEvents.
 	}
 	public static EntityHitResult hitscanEntity(World world, LivingEntity user, double distance, Predicate<Entity> targetPredicate){
 		Vec3d vec3d = user.getCameraPosVec(1);

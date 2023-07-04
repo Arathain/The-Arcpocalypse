@@ -178,8 +178,8 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			n = 0.0F;
 			float o = 0.0F;
 			if (!player.hasVehicle() && player.isAlive()) {
-				n = MathHelper.lerp(tickDelta, player.lastLimbDistance, player.limbDistance);
-				o = player.limbAngle - player.limbDistance * (1.0F - tickDelta);
+				n = MathHelper.lerp(tickDelta, player.limbData.getLimbDistance(), player.limbData.getLimbDistance());
+				o = player.limbData.getLimbAngle(0) - player.limbData.getLimbDistance() * (1.0F - tickDelta);
 				if (player.isBaby()) {
 					o *= 3.0F;
 				}

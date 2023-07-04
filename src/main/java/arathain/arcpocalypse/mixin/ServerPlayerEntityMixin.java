@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity {
-	public ServerPlayerEntityMixin(World world, BlockPos blockPos, float f, GameProfile gameProfile, @Nullable PlayerPublicKey playerPublicKey) {
-		super(world, blockPos, f, gameProfile, playerPublicKey);
+	public ServerPlayerEntityMixin(World world, BlockPos blockPos, float f, GameProfile gameProfile) {
+		super(world, blockPos, f, gameProfile);
 	}
 
 	@Inject(method = "onDeath", at = @At("TAIL"))

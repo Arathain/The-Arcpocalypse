@@ -37,7 +37,7 @@ public class NecoItem extends Item {
 			if (neco != user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()) {
 				user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setArc(true);
 				user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setNecoType(neco);
-				Explosion explosion = new Explosion(world, user, null, new ExplosionBehavior(), user.getX(), user.getY(), user.getZ(), 2, false, Explosion.DestructionType.NONE);
+				Explosion explosion = new Explosion(world, user, null, new ExplosionBehavior(), user.getX(), user.getY(), user.getZ(), 2, false, Explosion.DestructionType.KEEP);
 				explosion.clearAffectedBlocks();
 				explosion.affectWorld(true);
 				user.getStackInHand(hand).decrement(1);

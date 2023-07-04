@@ -15,11 +15,16 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 public class AbyssLiftRenderer extends EntityRenderer<AbyssLiftEntity> {
 	private static final Identifier TEXTURE = new Identifier(Arcpocalypse.MODID, "textures/entity/abyss_lift.png");
 	private static final Identifier CHAIN_TEXTURE = new Identifier(Arcpocalypse.MODID, "textures/entity/lift_chain.png");
 	public AbyssLiftModel model;
+	private Vector3f pos_x = new Vector3f(1, 0, 0);
 
 	public AbyssLiftRenderer(EntityRendererFactory.Context context) {
 		super(context);
@@ -37,11 +42,11 @@ public class AbyssLiftRenderer extends EntityRenderer<AbyssLiftEntity> {
 	public void render(AbyssLiftEntity entity, float yaw, float tickDelta, MatrixStack stack, VertexConsumerProvider vertexConsumers, int light) {
 		model.setAngles(entity, tickDelta, 0F, entity.age + tickDelta, entity.getYaw(), entity.getPitch());
 		VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURE));
-		stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
-		stack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(yaw));
+		stack.multiply(Axis.X_POSITIVE.rotationDegrees(180));
+		stack.multiply(Axis.Y_POSITIVE.rotationDegrees(yaw));
 		stack.translate(0, -1.4, 0);
 		model.render(stack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-		stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
+		stack.multiply(Axis.X_POSITIVE.rotationDegrees(180));
 		stack.push();
 		Vec3d vec = Vec3d.ofBottomCenter(entity.getTargetPos());
 		float distanceX = (float) (vec.x - entity.getX());
@@ -60,9 +65,9 @@ public class AbyssLiftRenderer extends EntityRenderer<AbyssLiftEntity> {
 		float length = MathHelper.sqrt(squaredLength);
 
 		stack.push();
-		stack.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion((float) (-Math.atan2(z, x)) - 1.5707964F));
-		stack.multiply(Vec3f.POSITIVE_X.getRadialQuaternion((float) (-Math.atan2(lengthXY, y)) - 1.5707964F));
-		stack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(25));
+		stack.multiply(Axis.Y_POSITIVE.rotation((float) (-Math.atan2(z, x)) - 1.5707964F));
+		stack.multiply(Axis.X_POSITIVE.rotation((float) (-Math.atan2(lengthXY, y)) - 1.5707964F));
+		stack.multiply(Axis.Z_POSITIVE.rotationDegrees(25));
 		stack.push();
 		stack.translate(0.015, -0.2, 0);
 
@@ -85,7 +90,7 @@ public class AbyssLiftRenderer extends EntityRenderer<AbyssLiftEntity> {
 		vertexConsumer.vertex(matrix4f, vertX2, vertY2, 0F).color(0, 0, 0, 255).uv(maxU, minV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).next();
 
 		stack.pop();
-		stack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90));
+		stack.multiply(Axis.Z_POSITIVE.rotationDegrees(90));
 		stack.translate(-0.015, -0.2, 0);
 
 		entry = stack.peek();

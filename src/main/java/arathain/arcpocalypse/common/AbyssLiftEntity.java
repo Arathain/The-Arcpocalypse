@@ -11,16 +11,13 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.passive.HorseBaseEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.vehicle.BoatEntity;
-import net.minecraft.entity.vehicle.MinecartEntity;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
-import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.util.ActionResult;
@@ -34,7 +31,6 @@ import org.quiltmc.qsl.entity.multipart.api.EntityPart;
 import org.quiltmc.qsl.entity.multipart.api.MultipartEntity;
 
 import java.util.List;
-import java.util.Objects;
 
 public class AbyssLiftEntity extends Entity implements MultipartEntity {
 	private int descentTicks = 0;
@@ -62,13 +58,13 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 
 	@Override
 	public boolean damage(DamageSource source, float amount) {
-		if (this.world.isClient() || !this.isAlive()) return false;
+		if (this.getWorld().isClient() || !this.isAlive()) return false;
 
 		if (this.isInvulnerableTo(source))
 			return false;
 
 		if ((source.isSourceCreativePlayer() && source.getAttacker() instanceof PlayerEntity plr && plr.isSneaking()) ||  (source.getAttacker() instanceof PlayerEntity player && player.getStackInHand(Hand.MAIN_HAND).getItem() instanceof PickaxeItem && player.getAbilities().allowModifyWorld && player.isSneaking())) {
-			ItemScatterer.spawn(this.world, this.getX(), this.getY(), this.getZ(), ArcpocalypseItems.ABYSS_LIFT.getDefaultStack());
+			ItemScatterer.spawn(this.getWorld(), this.getX(), this.getY(), this.getZ(), ArcpocalypseItems.ABYSS_LIFT.getDefaultStack());
 			this.discard();
 			return true;
 		}
@@ -78,7 +74,7 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 	}
 
 	@Override
-	public void updatePassengerPosition(Entity passenger) {
+	public void updatePassengerPosition(Entity passenger, Entity.PositionUpdater positionUpdater) {
 		if (!this.hasPassenger(passenger)) {
 			return;
 		}
@@ -109,12 +105,12 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 		if(this.getTargetPos().equals(BlockPos.ORIGIN)) {
 			this.setTargetPos(this.getBlockPos().add(0, 3, 0));
 		}
-		if(!world.isClient() && canDescend()) {
+		if(!getWorld().isClient() && canDescend()) {
 			this.descendTick();
 		}
-		List<Entity> list = this.world.getOtherEntities(this, this.getBoundingBox().expand(0.2F, -0.01F, 0.2F), EntityPredicates.canBePushedBy(this));
+		List<Entity> list = this.getWorld().getOtherEntities(this, this.getBoundingBox().expand(0.2F, -0.01F, 0.2F), EntityPredicates.canBePushedBy(this));
 		if (!list.isEmpty()) {
-			boolean bl = !this.world.isClient && !(this.getPrimaryPassenger() instanceof PlayerEntity);
+			boolean bl = !this.getWorld().isClient && !(this.getPrimaryPassenger() instanceof PlayerEntity);
 
 			for (Entity value : list) {
 				if (!value.hasPassenger(this)) {
@@ -128,9 +124,9 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 	}
 	private boolean canDescend() {
 		boolean bl = true;
-		int m = this.world.getDimension().minY();
+		int m = this.getWorld().getDimension().minY();
 		for(int i = this.getBlockY(); i >= m; i--) {
-			bl = this.world.getBlockState(new BlockPos(this.getBlockX(), i, this.getBlockZ())).isAir();
+			bl = this.getWorld().getBlockState(new BlockPos(this.getBlockX(), i, this.getBlockZ())).isAir();
 			if(!bl) {
 				break;
 			}
@@ -138,13 +134,13 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 		return bl && ((hasMittyAndNanachi() && this.hasPassengers()) || this.descentTicks >= 100);
 	}
 	private boolean hasMittyAndNanachi() {
-		boolean cat = !this.world.getOtherEntities(this, this.getBoundingBox().expand(2), entity -> entity instanceof AbyssLiftEntity ent && ent.hasPassengers() && ent.getFirstPassenger() instanceof CatEntity).isEmpty();
-		boolean player = !this.world.getOtherEntities(this, this.getBoundingBox().expand(2), entity -> entity instanceof AbyssLiftEntity ent && ent.hasPassengers() && ent.getFirstPassenger() instanceof PlayerEntity).isEmpty();
+		boolean cat = !this.getWorld().getOtherEntities(this, this.getBoundingBox().expand(2), entity -> entity instanceof AbyssLiftEntity ent && ent.hasPassengers() && ent.getFirstPassenger() instanceof CatEntity).isEmpty();
+		boolean player = !this.getWorld().getOtherEntities(this, this.getBoundingBox().expand(2), entity -> entity instanceof AbyssLiftEntity ent && ent.hasPassengers() && ent.getFirstPassenger() instanceof PlayerEntity).isEmpty();
 		return (this.getFirstPassenger() instanceof PlayerEntity && cat) || (this.getFirstPassenger() instanceof CatEntity && player);
 	}
 	@Override
 	public ActionResult interact(PlayerEntity player, Hand hand) {
-		if(player.getStackInHand(hand).isEmpty() && !world.isClient()) {
+		if(player.getStackInHand(hand).isEmpty() && !getWorld().isClient()) {
 			player.startRiding(this, true);
 		}
 		return super.interact(player, hand);
@@ -153,7 +149,7 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 		this.prevX = this.getX();
 		this.prevY = this.getY();
 		this.prevZ = this.getZ();
-		if(!(this.getY() < this.world.getDimension().minY() - 10) && this.descentTicks < 100) {
+		if(!(this.getY() < this.getWorld().getDimension().minY() - 10) && this.descentTicks < 100) {
 			this.setVelocity(0, -0.75, 0);
 		} else {
 			this.setVelocity(0, 0, 0);
@@ -199,7 +195,7 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 	}
 	@Override
 	public boolean isLogicalSideForUpdatingMovement() {
-		return !this.world.isClient();
+		return !this.getWorld().isClient();
 	}
 
 	public void setTargetPos(BlockPos pos) {
@@ -222,7 +218,7 @@ public class AbyssLiftEntity extends Entity implements MultipartEntity {
 	}
 
 	@Override
-	public Packet<?> createSpawnPacket() {
+	public Packet<ClientPlayPacketListener> createSpawnPacket() {
 		return new EntitySpawnS2CPacket(this);
 	}
 

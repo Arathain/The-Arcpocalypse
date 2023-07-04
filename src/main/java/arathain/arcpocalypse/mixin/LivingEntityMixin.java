@@ -30,7 +30,7 @@ public abstract class LivingEntityMixin extends Entity {
 		if(((LivingEntity)(Object)this) instanceof ServerPlayerEntity plr && this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			Vec3d vec = this.getPos().subtract(this.prevX, this.prevY, this.prevZ);
 			plr.stopFallFlying();
-			this.world.createExplosion(this, null, null, this.getX(), this.getY(), this.getZ(), (float) vec.lengthSquared() * 3, !plr.interactionManager.getGameMode().isBlockBreakingRestricted(), plr.interactionManager.getGameMode().isBlockBreakingRestricted() ? Explosion.DestructionType.NONE : Explosion.DestructionType.BREAK);
+			//this.getWorld().createExplosion(this, null, null, this.getX(), this.getY(), this.getZ(), (float) vec.lengthSquared() * 3, !plr.interactionManager.getGameMode().isBlockBreakingRestricted(), plr.interactionManager.getGameMode().isBlockBreakingRestricted() ? Explosion.DestructionType.KEEP : Explosion.DestructionType.);
 		}
 	}
 
@@ -44,7 +44,7 @@ public abstract class LivingEntityMixin extends Entity {
 		if(this.verticalCollision && ((LivingEntity)(Object)this) instanceof ServerPlayerEntity plr && this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			Vec3d vec = this.getPos().subtract(this.prevX, this.prevY, this.prevZ);
 			plr.stopFallFlying();
-			this.world.createExplosion(this, DamageSource.explosion(plr).setUsesMagic(), null, this.getX(), this.getY(), this.getZ(), (float) vec.lengthSquared() * 3 * Math.abs(plr.getPitch() / 90f), !plr.interactionManager.getGameMode().isBlockBreakingRestricted(), plr.interactionManager.getGameMode().isBlockBreakingRestricted() ? Explosion.DestructionType.NONE : Explosion.DestructionType.BREAK);
+			//this.getWorld().createExplosion(this, DamageSource.explosion(plr).setUsesMagic(), null, this.getX(), this.getY(), this.getZ(), (float) vec.lengthSquared() * 3 * Math.abs(plr.getPitch() / 90f), !plr.interactionManager.getGameMode().isBlockBreakingRestricted(), plr.interactionManager.getGameMode().isBlockBreakingRestricted() ? Explosion.DestructionType.NONE : Explosion.DestructionType.BREAK);
 		}
 	}
 }
