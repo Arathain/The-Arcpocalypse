@@ -1,6 +1,7 @@
 package arathain.arcpocalypse;
 
 import arathain.arcpocalypse.common.*;
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -33,10 +34,11 @@ public class Arcpocalypse implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("Arcpocalypse");
 	public static final String MODID = "arcpocalypse";
 	public static final Color BURUNYUU_LASER = new Color(100, 10, 30);
-	public static final boolean DOES_THE_ITEM_MAKE_YOU_TRANSFORM_ALSO_THIS_WILL_BE_IN_A_CONFIG_MAYBE = false; // Decide if you want a config or if you want this to be devs only
+	//public static final boolean DOES_THE_ITEM_MAKE_YOU_TRANSFORM_ALSO_THIS_WILL_BE_IN_A_CONFIG_MAYBE = false; // Decide if you want a config or if you want this to be devs only
 
 	@Override
 	public void onInitialize(ModContainer mod) {
+		MidnightConfig.init(MODID, ArcpocalypseConfig.class);
 		NekoArcScaleType.init();
 		ArcpocalypseEntities.init();
 		ArcpocalypseItems.init();
@@ -68,4 +70,6 @@ public class Arcpocalypse implements ModInitializer {
 		vec3d3.multiply(squareDistance);
 		return world.raycast(new RaycastContext(vec3d, vec3d3, RaycastContext.ShapeType.OUTLINE, fluidHandling, user));
 	}
+
+
 }

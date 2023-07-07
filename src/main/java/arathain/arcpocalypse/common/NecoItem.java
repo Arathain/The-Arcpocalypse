@@ -2,6 +2,7 @@ package arathain.arcpocalypse.common;
 
 import arathain.arcpocalypse.Arcpocalypse;
 import arathain.arcpocalypse.ArcpocalypseComponents;
+import arathain.arcpocalypse.ArcpocalypseConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -33,7 +34,7 @@ public class NecoItem extends Item {
 
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		if (Arcpocalypse.DOES_THE_ITEM_MAKE_YOU_TRANSFORM_ALSO_THIS_WILL_BE_IN_A_CONFIG_MAYBE) {
+		/*if (Arcpocalypse.DOES_THE_ITEM_MAKE_YOU_TRANSFORM_ALSO_THIS_WILL_BE_IN_A_CONFIG_MAYBE) {
 			if (neco != user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()) {
 				user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setArc(true);
 				user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setNecoType(neco);
@@ -45,6 +46,7 @@ public class NecoItem extends Item {
 			} else return super.use(world, user, hand);
 		} else {
 			return super.use(world, user, hand);
-		}
+		}*/
+		return super.use(world, user, hand);
 	}
 }

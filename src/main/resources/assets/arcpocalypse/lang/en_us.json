@@ -30,5 +30,28 @@
   "item.arcpocalypse.suspicious_broom": "Suspicious Broom",
   "item.arcpocalypse.true_ancestor_marble": "True Ancestor Marble",
   "item.arcpocalypse.crimson_gem": "Crimson Gem",
-  "item.arcpocalypse.hypnotic_stopwatch": "Hypnotic Stopwatch"
+  "item.arcpocalypse.hypnotic_stopwatch": "Hypnotic Stopwatch",
+
+  "arcpocalypse.midnightconfig.title": "Arcpocalypse",
+
+  "arcpocalypse.midnightconfig.category.neco_abilities": "Neco Arc Abilities",
+  "arcpocalypse.midnightconfig.category.client": "Client",
+
+  "arcpocalypse.midnightconfig.enum.ArcAbilitySettings.ENABLED": "Enabled",
+  "arcpocalypse.midnightconfig.enum.ArcAbilitySettings.WORLD_SAFE": "World Safe",
+  "arcpocalypse.midnightconfig.enum.ArcAbilitySettings.FULL_SAFE": "Full Safe",
+  "arcpocalypse.midnightconfig.enum.ArcAbilitySettings.DISABLED": "Disabled",
+
+  "arcpocalypse.midnightconfig.boomboom": "Explosions on landing after Neco-Arc rockets",
+  "arcpocalypse.midnightconfig.boomboom.tooltip":"Enabled: Explosions damage blocks, entities. \nWorld Safe: Explosions damage entities, world is preserved. \nFull Safe: Explosions do not damage entities nor the world, essentially cosmetic. \nDisabled: Explosions went to the Crocodile Garden, byebye explosions!",
+
+  "arcpocalypse.midnightconfig.lasertime": "Lasers when crouched+running",
+  "arcpocalypse.midnightconfig.lasertime.tooltip":"Enabled: Lasers damage entities, burn blocks. \nWorld Safe: Lasers damage entities, world does not get burnt. \nFull Safe: Lasers will neither damage entities nor burn the world. \nDisabled: Lasers got cut into 17 pieces, farewell lasers!",
+
+
+  "arcpocalypse.midnightconfig.explainTheThing": "World-safe mode disables any destructive properties the abilities may have, whilst Full-Safe mode does not damage entities nor the world. All Ability settings are synced when joining servers.",
+
+  "arcpocalypse.midnightconfig.burenya": "Neco Arc Sounds"
+
+
 }
