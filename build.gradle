@@ -1,6 +1,6 @@
 plugins {
 	id 'maven-publish'
-	id 'org.quiltmc.loom' version '1.+'
+	id 'org.quiltmc.loom' version '1.2.+'
 }
 
 archivesBaseName = project.archives_base_name
@@ -10,7 +10,7 @@ group = project.maven_group
 repositories {
 	maven {
 		name = "Ladysnake"
-		url = "https://ladysnake.jfrog.io/artifactory/mods"
+		url = "https://maven.ladysnake.org/releases"
 	}
 	maven { url 'https://masa.dy.fi/maven' }
 	maven { url 'https://maven.terraformersmc.com' }
@@ -20,6 +20,8 @@ repositories {
 		url = "https://api.modrinth.com/maven"
 		content { includeGroup "maven.modrinth" }
 	}
+	maven { url 'https://jitpack.io' }
+
 }
 
 // All dependency versions are declared in the gradle.properties file
@@ -27,8 +29,11 @@ dependencies {
 	minecraft "com.mojang:minecraft:${minecraft_version}"
 	mappings("org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings_version}:intermediary-v2")
 	modImplementation "org.quiltmc:quilt-loader:${project.quilt_loader_version}"
-	//modImplementation "com.github.Arathain:LodestoneLib-Quilt:64238b9afc"
-	//include "com.github.Arathain:LodestoneLib-Quilt:64238b9afc"
+	modImplementation include ('com.github.Arathain:LodestoneLib-Quilt:1.19.3-SNAPSHOT') {
+		exclude(group: "net.fabricmc")
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+
 	modApi("com.github.Virtuoel:Pehkui:${project.pehkui_version}", {
 		exclude group: "net.fabricmc.fabric-api"
 	})
@@ -40,7 +45,10 @@ dependencies {
 		exclude(group: "net.fabricmc")
 		exclude(group: "net.fabricmc.fabric-api")
 	}
-	modImplementation include ("maven.modrinth:midnightlib:${mnl_version}-quilt")
+	modImplementation include ("maven.modrinth:midnightlib:${mnl_version}-quilt") {
+		exclude(group: "net.fabricmc")
+		exclude(group: "net.fabricmc.fabric-api")
+	}
 	modRuntimeOnly("com.terraformersmc:modmenu:7.1.0")
 
 	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${quilted_fabric_api_version}-${minecraft_version}"

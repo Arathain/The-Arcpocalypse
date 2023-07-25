@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -34,6 +35,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import team.lodestar.lodestone.systems.rendering.particle.Easing;
+import team.lodestar.lodestone.systems.rendering.particle.WorldParticleBuilder;
+import team.lodestar.lodestone.systems.rendering.particle.data.ColorParticleData;
+import team.lodestar.lodestone.systems.rendering.particle.data.GenericParticleData;
+import team.lodestar.lodestone.systems.rendering.particle.data.SpinParticleData;
+
+import java.awt.*;
+
+import static team.lodestar.lodestone.setup.LodestoneParticles.SMOKE_PARTICLE;
+import static team.lodestar.lodestone.setup.LodestoneParticles.STAR_PARTICLE;
 //import static com.sammy.ortus.setup.OrtusParticles.*;
 
 
@@ -114,18 +125,13 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 					this.playSound(ArcpocalypseSoundEvents.ENTITY_NECO_BEAM, this.getSoundVolume(), 1);
 				}
 				if(getWorld().isClient) {
-					/*ParticleBuilders.WorldParticleBuilder builder;
-					builder = ParticleBuilders.create(SMOKE_PARTICLE)
-							.setScale(0.2f + random.nextFloat() * 0.1f, 0)
-							.setLifetime(20 + random.nextInt(10))
-							.setAlpha(1.0f, 0.0f)
-							.setColor(Color.RED, Arcpocalypse.BURUNYUU_LASER)
-							.setColorCoefficient(1.0f)
-							.setColorEasing(Easing.CIRC_OUT)
-							.setSpinOffset((getWorld().getTime() * 0.2f) % 6.28f)
-							.setSpin(0, 0.4f)
-							.setSpinEasing(Easing.QUARTIC_IN)
-							.enableNoClip();*/
+					WorldParticleBuilder builder = WorldParticleBuilder.create(SMOKE_PARTICLE)
+						.setScaleData(GenericParticleData.create(0.2f + random.nextFloat() * 0.1f, 0).build())
+						.setLifetime(20 + random.nextInt(10))
+						.setTransparencyData(GenericParticleData.create(1.0f, 0.0f).build())
+						.setColorData(ColorParticleData.create(Color.RED, Arcpocalypse.BURUNYUU_LASER).setCoefficient(1.0f).setEasing(Easing.CIRC_OUT).build())
+						.setSpinData(SpinParticleData.create(0, 0.4f).setSpinOffset((getWorld().getTime() * 0.2f) % 6.28f).setEasing(Easing.QUARTIC_IN).build())
+						.enableNoClip();
 					Vec3d rEye = this.getEyePos().subtract(0, 0.12, 0).add(new Vec3d(-0.1, 0.2, 0.27).rotateX((float) (this.getPitch() * -Math.PI / 180f)).rotateY((float) (this.getHeadYaw() * -Math.PI / 180)));
 					Vec3d lEye = this.getEyePos().subtract(0, 0.12, 0).add(new Vec3d(0.1, 0.2, 0.27).rotateX((float) (this.getPitch() * -Math.PI / 180f)).rotateY((float) (this.getHeadYaw() * -Math.PI / 180)));
 					for(int i = 0; i < 65; i++) {
@@ -138,8 +144,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 							break;
 						}
 						Vec3d rot = rotation.multiply(i);
-						//builder.spawn(getWorld(), rEye.x + rot.x, rEye.y + rot.y, rEye.z + rot.z);
-						//builder.spawn(getWorld(), lEye.x + rot.x, lEye.y + rot.y, lEye.z + rot.z);
+						builder.spawn(getWorld(), rEye.x + rot.x, rEye.y + rot.y, rEye.z + rot.z);
+						builder.spawn(getWorld(), lEye.x + rot.x, lEye.y + rot.y, lEye.z + rot.z);
 					}
 				} else {
 					EntityHitResult hit = Arcpocalypse.hitscanEntity(getWorld(), this, 64, entity -> !entity.isFireImmune());
@@ -179,32 +185,24 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 						rotation.z * speed + (rotation.z * 1.5D - velocity.z) * speed));
 				if (getWorld().isClient) {
 					Vec3d vector = new Vec3d(this.getX() + this.getRotationVector().negate().multiply(0.3).x, this.getY() + this.getRotationVector().negate().multiply(0.3).y, this.getZ() + this.getRotationVector().negate().multiply(0.3).z);
-					/*ParticleBuilders.create(SMOKE_PARTICLE)
-							.setScale(0.5f + random.nextFloat() * 0.1f, 0)
+					WorldParticleBuilder.create(SMOKE_PARTICLE)
+							.setScaleData(GenericParticleData.create(0.5f + random.nextFloat() * 0.1f, 0).build())
 							.setLifetime(50 + random.nextInt(10))
-							.setAlpha(0.9f, 0.0f)
-							.setColor(Color.ORANGE, Color.RED)
-							.setColorCoefficient(0.8f)
-							.setColorEasing(Easing.CIRC_OUT)
-							.setSpinOffset((getWorld().getTime() * 0.2f) % 6.28f)
-							.setSpin(0, 0.4f)
-							.setSpinEasing(Easing.QUARTIC_IN)
+							.setTransparencyData(GenericParticleData.create(0.9f, 0.0f).build())
+							.setColorData(ColorParticleData.create(Color.ORANGE, Color.RED).setCoefficient(0.8f).setEasing(Easing.CIRC_OUT).build())
+							.setSpinData(SpinParticleData.create(0, 0.4f).setSpinOffset((getWorld().getTime() * 0.2f) % 6.28f).setEasing(Easing.QUARTIC_IN).build())
 							.addMotion(0, 0f - random.nextFloat() * 0.01f, 0)
 							.enableNoClip()
 							.spawn(getWorld(), vector.x, vector.y, vector.z);
-					ParticleBuilders.create(STAR_PARTICLE)
-							.setScale(0.7f + random.nextFloat() * 0.2f, 0)
+					WorldParticleBuilder.create(STAR_PARTICLE)
+							.setScaleData(GenericParticleData.create(0.7f + random.nextFloat() * 0.2f, 0).build())
 							.setLifetime(20 + random.nextInt(6))
-							.setAlpha(0.9f, 0.0f)
-							.setColor(Color.YELLOW, Color.ORANGE)
-							.setColorCoefficient(0.8f)
-							.setColorEasing(Easing.CIRC_OUT)
-							.setSpinOffset((getWorld().getTime() * 0.2f) % 6.28f)
-							.setSpin(0, 0.4f)
-							.setSpinEasing(Easing.QUARTIC_IN)
+							.setTransparencyData(GenericParticleData.create(0.9f, 0.0f).build())
+							.setColorData(ColorParticleData.create(Color.YELLOW, Color.ORANGE).setCoefficient(0.8f).setEasing(Easing.CIRC_OUT).build())
+							.setSpinData(SpinParticleData.create(0, 0.4f).setSpinOffset((getWorld().getTime() * 0.2f) % 6.28f).setEasing(Easing.QUARTIC_IN).build())
 							.addMotion(0, 0f - random.nextFloat() * 0.01f, 0)
 							.enableNoClip()
-							.spawn(getWorld(), vector.x, vector.y, vector.z);*/
+							.spawn(getWorld(), vector.x, vector.y, vector.z);
 				}
 			}
 		}
