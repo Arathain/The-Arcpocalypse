@@ -89,6 +89,7 @@ public class NekoArcComponent implements AutoSyncedComponent {
 
 		public static TypeNeco getNecoFromString(String string) {
 			return switch (string) {
+				case "arc" -> ARC;
 				case "ciel" -> CIEL;
 				case "akiha" -> AKIHA;
 				case "hisui" -> HISUI;

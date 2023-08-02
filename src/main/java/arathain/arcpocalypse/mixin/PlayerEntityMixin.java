@@ -117,7 +117,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	public void neko$tick(CallbackInfo info) {
 		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			NekoArcComponent.TypeNeco necoType = this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType();
-			if (this.isAlive() && this.random.nextInt(4000) < this.ambientSoundChance++) {
+			if (this.isAlive() && this.random.nextInt(8000) < this.ambientSoundChance++) {
 				this.ambientSoundChance = -100;
 				if (MinecraftQuiltLoader.getEnvironmentType() == EnvType.CLIENT) {
 					NecoArcNoiseClientCode.packetProxy(((PlayerEntity) (Object) this), this.getLastAttackTime());

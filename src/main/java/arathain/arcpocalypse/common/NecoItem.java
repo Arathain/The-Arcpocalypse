@@ -31,20 +31,4 @@ public class NecoItem extends Item {
 		super(settings);
 		this.neco = neco;
 	}
-
-	@Override
-	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		if (ArcpocalypseConfig.getCurrentNetworkSyncableConfig().doItemTransform()) {
-			if (neco != user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()) {
-				user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setArc(true);
-				user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setNecoType(neco);
-				Explosion explosion = new Explosion(world, user, null, new ExplosionBehavior(), user.getX(), user.getY(), user.getZ(), 2, false, Explosion.DestructionType.KEEP);
-				explosion.clearAffectedBlocks();
-				explosion.affectWorld(true);
-				user.getStackInHand(hand).decrement(1);
-				return TypedActionResult.success(user.getStackInHand(hand));
-			}
-		}
-        return super.use(world, user, hand);
-	}
 }

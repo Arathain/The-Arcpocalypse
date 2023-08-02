@@ -65,8 +65,5 @@
   "arcpocalypse.midnightconfig.explainTheThing": "World-safe mode disables any destructive properties the abilities may have, whilst Full-Safe mode does not damage entities nor the world. All Ability settings are synced when joining servers.\n ",
 
   "arcpocalypse.midnightconfig.burenya": "Neco Arc volume level",
-  "arcpocalypse.midnightconfig.burenya.tooltip":"Control for how loud Neco-Arc's Ambient/Taunting noises are.",
-
-  "arcpocalypse.midnightconfig.doTheTransform": "Neco Items transform on use",
-  "arcpocalypse.midnightconfig.doTheTransform.tooltip":"If enabled, this skips the abyss lift and just has people right click the associated item for the form. (Ie: The Marble for Neco-Arc, the Cross for Neco-Ciel.)"
+  "arcpocalypse.midnightconfig.burenya.tooltip":"Control for how loud Neco-Arc's Ambient/Taunting noises are. Values range from 0-100."
 }

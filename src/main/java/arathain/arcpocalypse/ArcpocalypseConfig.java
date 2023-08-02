@@ -8,8 +8,6 @@ import org.quiltmc.loader.api.minecraft.MinecraftQuiltLoader;
 public class ArcpocalypseConfig extends MidnightConfig {
 	@Client
 	@Entry(category = "quality_of_life", min=0, max=100) public static int burenya = 100;
-	@Entry(category = "quality_of_life") public static boolean doTheTransform = false;
-
 	@Comment(category = "neco_abilities") public static Comment explainTheThing;
 	@Entry(category = "neco_abilities") public static ArcAbilitySettings boomboom = ArcAbilitySettings.ENABLED;
 	@Entry(category = "neco_abilities") public static ArcAbilitySettings lasertime = ArcAbilitySettings.ENABLED;
@@ -21,7 +19,7 @@ public class ArcpocalypseConfig extends MidnightConfig {
 		if (serverConfig != null && MinecraftQuiltLoader.getEnvironmentType() == EnvType.CLIENT) {
 			return serverConfig;
 		}
-		return new NetworkSyncableConfig(boomboom, lasertime, doTheTransform);
+		return new NetworkSyncableConfig(boomboom, lasertime);
 	}
 
 
@@ -54,22 +52,18 @@ public class ArcpocalypseConfig extends MidnightConfig {
 		}
 	}
 
-	public record NetworkSyncableConfig(ArcAbilitySettings enableExplosions, ArcAbilitySettings enableLasers, boolean doItemTransform) {
+	public record NetworkSyncableConfig(ArcAbilitySettings enableExplosions, ArcAbilitySettings enableLasers) {
 		public NbtCompound compileNBT() {
 			NbtCompound config = new NbtCompound();
 			config.putString("enableExplosions", enableExplosions().id);
 			config.putString("enableLasers", enableLasers().id);
-			//config.putBoolean("doSounds", doSounds());
-			config.putBoolean("doItemTransform", doItemTransform());
 			return config;
 		}
 
 		public static NetworkSyncableConfig fromConfig(NbtCompound configNBT) {
 			ArcAbilitySettings enableExplosions = ArcAbilitySettings.parseSetting(configNBT.getString("enableExplosions"));
 			ArcAbilitySettings enableLasers = ArcAbilitySettings.parseSetting(configNBT.getString("enableLasers"));
-			//boolean doSounds = configNBT.getBoolean("doSounds");
-			boolean doItemTransform = configNBT.getBoolean("doItemTransform");
-			return new NetworkSyncableConfig(enableExplosions, enableLasers, doItemTransform);
+			return new NetworkSyncableConfig(enableExplosions, enableLasers);
 		}
 	}
 }
