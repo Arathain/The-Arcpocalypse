@@ -34,7 +34,7 @@ public class NecoItem extends Item {
 
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		/*if (Arcpocalypse.DOES_THE_ITEM_MAKE_YOU_TRANSFORM_ALSO_THIS_WILL_BE_IN_A_CONFIG_MAYBE) {
+		if (ArcpocalypseConfig.getCurrentNetworkSyncableConfig().doItemTransform()) {
 			if (neco != user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()) {
 				user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setArc(true);
 				user.getComponent(ArcpocalypseComponents.ARC_COMPONENT).setNecoType(neco);
@@ -43,10 +43,8 @@ public class NecoItem extends Item {
 				explosion.affectWorld(true);
 				user.getStackInHand(hand).decrement(1);
 				return TypedActionResult.success(user.getStackInHand(hand));
-			} else return super.use(world, user, hand);
-		} else {
-			return super.use(world, user, hand);
-		}*/
-		return super.use(world, user, hand);
+			}
+		}
+        return super.use(world, user, hand);
 	}
 }

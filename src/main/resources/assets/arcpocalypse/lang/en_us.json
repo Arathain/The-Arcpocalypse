@@ -4,27 +4,39 @@
   "arcpocalypse.subtitles.entity.neco_arc.taunt": "Neco Arc mocks your distinct lack of neco-arc-ness",
   "arcpocalypse.subtitles.entity.neco_arc.hurt": "Neco Arc emits a resonant cry of pain",
   "arcpocalypse.subtitles.entity.neco_arc.death": "A foul beast is vanquished",
+
   "arcpocalypse.subtitles.entity.neco_ciel.idle": "Neco Ciel expresses themselves",
-  "arcpocalypse.subtitles.entity.neco_ciel.taunt": "Neco Ciel mocks your distinct lack of neco-arc-ness",
-  "arcpocalypse.subtitles.entity.neco_ciel.hurt": "Neco Ciel emits a resonant cry of pain",
+  "arcpocalypse.subtitles.entity.neco_ciel.taunt": "Neco Ciel derides your absolute scarcity of neco-ciel-ness",
+  "arcpocalypse.tn.note.1": "As normal Ciel is a member of the Holy Church in Tsukihime. I wrote following translation key as a biblical reference, for proper translation please reference Mark 15:37–39 in your language. I am sorry.",
+  "arcpocalypse.subtitles.entity.neco_ciel.hurt": "Neco Ciel utters a loud cry, yet to breath her last",
   "arcpocalypse.subtitles.entity.neco_ciel.death": "A devious beast is vanquished",
+
   "arcpocalypse.subtitles.entity.neco_akiha.idle": "Neco Akiha expresses themselves",
-  "arcpocalypse.subtitles.entity.neco_akiha.taunt": "Neco Akiha mocks your distinct lack of neco-arc-ness",
-  "arcpocalypse.subtitles.entity.neco_akiha.hurt": "Neco Akiha emits a resonant cry of pain",
+  "arcpocalypse.subtitles.entity.neco_akiha.taunt": "Neco Akiha jeers at your obvious privation of neco-akiha-ness",
+  "arcpocalypse.subtitles.entity.neco_akiha.hurt": "Neco Akiha expresses an echoing scream of torture",
   "arcpocalypse.subtitles.entity.neco_akiha.death": "A demonic beast is vanquished",
+
   "arcpocalypse.subtitles.entity.neco_kohaku.idle": "Neco Kohaku expresses themselves",
-  "arcpocalypse.subtitles.entity.neco_kohaku.taunt": "Neco Kuhaku mocks your distinct lack of neco-arc-ness",
-  "arcpocalypse.subtitles.entity.neco_kohaku.hurt": "Neco Kohaku emits a resonant cry of pain",
+  "arcpocalypse.subtitles.entity.neco_kohaku.taunt": "Neco Kohaku pities your dearth of neco-kohaku-ness",
+  "arcpocalypse.subtitles.entity.neco_kohaku.hurt": "Neco Kohaku screams a sonorous wail of strain",
   "arcpocalypse.subtitles.entity.neco_kohaku.death": "An unholy beast is vanquished",
+
   "arcpocalypse.subtitles.entity.neco_hisui.idle": "Neco Hisui expresses themselves",
-  "arcpocalypse.subtitles.entity.neco_hisui.taunt": "Neco Hisui mocks your distinct lack of neco-arc-ness",
-  "arcpocalypse.subtitles.entity.neco_hisui.hurt": "Neco Hisui emits a resonant cry of pain",
+  "arcpocalypse.subtitles.entity.neco_hisui.taunt": "Neco Hisui scoffs at your utter absence of neco-hisui-ness",
+  "arcpocalypse.subtitles.entity.neco_hisui.hurt": "Neco Hisui emits a ringing howl of misery",
   "arcpocalypse.subtitles.entity.neco_hisui.death": "A beguiling beast is vanquished",
+
   "arcpocalypse.subtitles.entity.neco_all.beam": "The power of the True Ancestors is made manifest",
+
+
+
   "commands.neco.success.single": "Ascended %s",
   "commands.neco.success.multiple": "Ascended %s entities.",
   "commands.deneco.success.single": "Reverted %s",
   "commands.deneco.success.multiple": "Reverted %s players.",
+
+
+
   "item.arcpocalypse.abyss_lift": "Abyss Lift",
   "item.arcpocalypse.holy_math_symbol": "Holy Math Symbol",
   "item.arcpocalypse.suspicious_broom": "Suspicious Broom",
@@ -32,10 +44,12 @@
   "item.arcpocalypse.crimson_gem": "Crimson Gem",
   "item.arcpocalypse.hypnotic_stopwatch": "Hypnotic Stopwatch",
 
+
+
   "arcpocalypse.midnightconfig.title": "Arcpocalypse",
 
   "arcpocalypse.midnightconfig.category.neco_abilities": "Neco Arc Abilities",
-  "arcpocalypse.midnightconfig.category.client": "Client",
+  "arcpocalypse.midnightconfig.category.quality_of_life": "Quality of Life",
 
   "arcpocalypse.midnightconfig.enum.ArcAbilitySettings.ENABLED": "Enabled",
   "arcpocalypse.midnightconfig.enum.ArcAbilitySettings.WORLD_SAFE": "World Safe",
@@ -44,14 +58,15 @@
 
   "arcpocalypse.midnightconfig.boomboom": "Explosions on landing after Neco-Arc rockets",
   "arcpocalypse.midnightconfig.boomboom.tooltip":"Enabled: Explosions damage blocks, entities. \nWorld Safe: Explosions damage entities, world is preserved. \nFull Safe: Explosions do not damage entities nor the world, essentially cosmetic. \nDisabled: Explosions went to the Crocodile Garden, byebye explosions!",
-
   "arcpocalypse.midnightconfig.lasertime": "Lasers when crouched+running",
   "arcpocalypse.midnightconfig.lasertime.tooltip":"Enabled: Lasers damage entities, burn blocks. \nWorld Safe: Lasers damage entities, world does not get burnt. \nFull Safe: Lasers will neither damage entities nor burn the world. \nDisabled: Lasers got cut into 17 pieces, farewell lasers!",
 
 
-  "arcpocalypse.midnightconfig.explainTheThing": "World-safe mode disables any destructive properties the abilities may have, whilst Full-Safe mode does not damage entities nor the world. All Ability settings are synced when joining servers.",
+  "arcpocalypse.midnightconfig.explainTheThing": "World-safe mode disables any destructive properties the abilities may have, whilst Full-Safe mode does not damage entities nor the world. All Ability settings are synced when joining servers.\n ",
 
-  "arcpocalypse.midnightconfig.burenya": "Neco Arc Sounds"
+  "arcpocalypse.midnightconfig.burenya": "Neco Arc volume level",
+  "arcpocalypse.midnightconfig.burenya.tooltip":"Control for how loud Neco-Arc's Ambient/Taunting noises are.",
 
-
+  "arcpocalypse.midnightconfig.doTheTransform": "Neco Items transform on use",
+  "arcpocalypse.midnightconfig.doTheTransform.tooltip":"If enabled, this skips the abyss lift and just has people right click the associated item for the form. (Ie: The Marble for Neco-Arc, the Cross for Neco-Ciel.)"
 }

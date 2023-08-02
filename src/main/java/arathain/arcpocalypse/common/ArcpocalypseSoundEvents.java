@@ -82,7 +82,7 @@ public class ArcpocalypseSoundEvents {
 			case AKIHA -> ENTITY_AKIHA_DEATH;
 			case HISUI -> ENTITY_HISUI_DEATH;
 			case KOHAKU -> ENTITY_KOHAKU_DEATH;
-			default -> ENTITY_ARC_HURT;
+			default -> ENTITY_ARC_DEATH;
 		};
 	}
 

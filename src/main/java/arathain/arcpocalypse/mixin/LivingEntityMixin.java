@@ -62,7 +62,7 @@ public abstract class LivingEntityMixin extends Entity {
 	private void arcExplosion(ServerPlayerEntity plr) {
 		Vec3d vec = this.getPos().subtract(this.prevX, this.prevY, this.prevZ);
 		plr.stopFallFlying();
-		if (MathHelper.clamp(this.getYaw(), -10, 10) != this.getYaw() || ArcpocalypseConfig.getCurrentNetworkSyncableConfig().enableExplosions() != ArcpocalypseConfig.ArcAbilitySettings.DISABLED) {
+		if (ArcpocalypseConfig.getCurrentNetworkSyncableConfig().enableExplosions() != ArcpocalypseConfig.ArcAbilitySettings.DISABLED) {
             switch (ArcpocalypseConfig.getCurrentNetworkSyncableConfig().enableExplosions()) {
                 case ENABLED ->
                         this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), (float) vec.lengthSquared() * 3, !plr.interactionManager.getGameMode().isBlockBreakingRestricted(), plr.interactionManager.getGameMode().isBlockBreakingRestricted() ? World.ExplosionSourceType.NONE : World.ExplosionSourceType.MOB);

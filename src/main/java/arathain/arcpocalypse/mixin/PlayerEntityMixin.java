@@ -3,16 +3,15 @@ package arathain.arcpocalypse.mixin;
 import arathain.arcpocalypse.Arcpocalypse;
 import arathain.arcpocalypse.ArcpocalypseComponents;
 import arathain.arcpocalypse.ArcpocalypseConfig;
+import arathain.arcpocalypse.client.NecoArcNoiseClientCode;
 import arathain.arcpocalypse.common.ArcpocalypseSoundEvents;
 import arathain.arcpocalypse.common.NekoArcComponent;
-//import com.sammy.ortus.systems.rendering.particle.Easing;
-//import com.sammy.ortus.systems.rendering.particle.ParticleBuilders;
+import net.fabricmc.api.EnvType;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -28,6 +27,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import org.quiltmc.loader.api.minecraft.MinecraftQuiltLoader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -57,6 +57,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	public abstract void damageShield(float amount);
 
 	@Shadow public abstract void stopFallFlying();
+
+	@Shadow public abstract void playSound(SoundEvent sound, float volume, float pitch);
 
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -93,13 +95,13 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	}
 	@Inject(method = "getDeathSound()Lnet/minecraft/sound/SoundEvent;", at = @At("HEAD"), cancellable = true)
 	private void neko$death(CallbackInfoReturnable<SoundEvent> cir) {
-		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc() && ArcpocalypseConfig.burenya) {
+		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			cir.setReturnValue(ArcpocalypseSoundEvents.getNecoDeath(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()));
 		}
 	}
 	@Inject(method = "getHurtSound", at = @At("HEAD"), cancellable = true)
 	private void neko$hurt(CallbackInfoReturnable<SoundEvent> cir) {
-		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc() && ArcpocalypseConfig.burenya) {
+		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			cir.setReturnValue(ArcpocalypseSoundEvents.getNecoHurt(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType()));
 		}
 	}
@@ -110,13 +112,16 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 			return 1;
 		} else return super.getSoundPitch();
 	}
+
 	@Inject(method = "tick", at = @At("HEAD"))
 	public void neko$tick(CallbackInfo info) {
 		if(this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).isArc()) {
 			NekoArcComponent.TypeNeco necoType = this.getComponent(ArcpocalypseComponents.ARC_COMPONENT).getNecoType();
-			if (this.isAlive() && this.random.nextInt(4000) < this.ambientSoundChance++ && ArcpocalypseConfig.burenya) {
-				this.ambientSoundChance = -40;
-				this.playSound((this.getAttacking() != null || this.getAttacker() != null || this.lastAttackedTicks < 100) ? (ArcpocalypseSoundEvents.getNecoTaunt(necoType)) : ArcpocalypseSoundEvents.getNecoAmbient(necoType), this.getSoundVolume(), 1);
+			if (this.isAlive() && this.random.nextInt(4000) < this.ambientSoundChance++) {
+				this.ambientSoundChance = -100;
+				if (MinecraftQuiltLoader.getEnvironmentType() == EnvType.CLIENT) {
+					NecoArcNoiseClientCode.packetProxy(((PlayerEntity) (Object) this), this.getLastAttackTime());
+				}
 			}
 
 			if(this.isSneaking() && this.isSprinting() && ArcpocalypseConfig.getCurrentNetworkSyncableConfig().enableLasers() != ArcpocalypseConfig.ArcAbilitySettings.DISABLED) {

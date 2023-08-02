@@ -68,9 +68,8 @@ public class NekoArcComponent implements AutoSyncedComponent {
 	}
 
 	public void setNecoType(TypeNeco neco) {
-		boolean sync = (this.necoType != neco);
 		this.necoType = neco;
-		if (sync) obj.syncComponent(ArcpocalypseComponents.ARC_COMPONENT);
+		obj.syncComponent(ArcpocalypseComponents.ARC_COMPONENT);
 	}
 
 	public enum TypeNeco {

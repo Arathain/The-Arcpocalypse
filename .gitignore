@@ -27,3 +27,4 @@ bin/
 # macOS
 *.DS_Store
 /runServer/
+/runOther/

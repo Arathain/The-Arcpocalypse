@@ -38,7 +38,10 @@
 			},
 			{
 				"id": "pehkui",
-				"versions": ">=3.4.0"
+				"versions": ">=3.7.0"
+			},
+			{
+				"id": "lodestone"
 			}
 		]
 	},
