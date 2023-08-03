@@ -25,19 +25,12 @@ import java.util.UUID;
 public class ArcpocalypseNetworking {
 	public static Identifier S2C_CONFIG_SYNC_PACKET = new Identifier("arcpocalypse", "s2c_config_sync");
 
-	public static void init() {
-		if (MinecraftQuiltLoader.getEnvironmentType() == EnvType.CLIENT) {
-			clientSync();
-		}
-
-		serverSync();
-	}
-
 	public static void clientSync() {
 		ClientPlayNetworking.registerGlobalReceiver(S2C_CONFIG_SYNC_PACKET, (client, handler, buf, responseSender) -> {
 			NbtCompound nbt = buf.readNbt();
 			client.execute(() -> ArcpocalypseConfig.setServerConfig(ArcpocalypseConfig.NetworkSyncableConfig.fromConfig(nbt)));
 		});
+
 		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> client.execute(() -> {
 			ArcpocalypseConfig.setServerConfig(null);
 		}));

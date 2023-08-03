@@ -54,7 +54,7 @@ public class Arcpocalypse implements ModInitializer {
 			content.addItem(ArcpocalypseItems.HYPNOTIC_STOPWATCH);
 			content.addItem(ArcpocalypseItems.SUSPICIOUS_BROOM);
 		});
-		ArcpocalypseNetworking.init();
+		ArcpocalypseNetworking.serverSync();
 	}
 	public static EntityHitResult hitscanEntity(World world, LivingEntity user, double distance, Predicate<Entity> targetPredicate){
 		Vec3d vec3d = user.getCameraPosVec(1);

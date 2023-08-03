@@ -22,5 +22,6 @@ public class ArcpocalypseClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(MAIDEN_ARC_MODEL_LAYER, NekoArcModel::getTexturedMaidModelData);
 		EntityModelLayerRegistry.registerModelLayer(LIFT_MODEL_LAYER, AbyssLiftModel::getTexturedModelData);
 		EntityRendererRegistry.register(ArcpocalypseEntities.ABYSS_LIFT, AbyssLiftRenderer::new);
+		ArcpocalypseNetworking.clientSync();
 	}
 }
